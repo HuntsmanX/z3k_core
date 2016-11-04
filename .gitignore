@@ -23,3 +23,8 @@
 #Ignore ide generated config
 .idea
 
+#Ignore secrets/database settings
+
+/config/secrets.yml
+/config/database.yml
+
