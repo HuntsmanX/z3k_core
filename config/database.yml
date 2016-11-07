@@ -11,7 +11,7 @@ default: &default
 
 development:
   <<: *default
-  database: nc_core_development
+  database: z3k_core_development
   username: 'dmitry'
   password: '199016'
 
@@ -20,12 +20,12 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: nc_core_test
+  database: z3k_core_test
   username: 'dmitry'
   password: '199016'
 
 production:
   <<: *default
-  database: nc_core_production
+  database: z3k_core_production
   username: 'dmitry'
   password: '199016'
