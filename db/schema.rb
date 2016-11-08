@@ -10,10 +10,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161102100923) do
+ActiveRecord::Schema.define(version: 20161108134117) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "forms_test_sections", force: :cascade do |t|
+    t.integer  "test_id"
+    t.string   "title"
+    t.text     "description"
+    t.integer  "time_limit"
+    t.integer  "bonus_time"
+    t.integer  "required_score"
+    t.integer  "required_score_units"
+    t.integer  "acceptable_score"
+    t.integer  "acceptable_score_units"
+    t.integer  "order_index"
+    t.boolean  "shuffle_questions"
+    t.integer  "questions_to_show"
+    t.integer  "show_next_section"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  create_table "forms_tests", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false

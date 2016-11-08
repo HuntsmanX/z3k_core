@@ -4,6 +4,10 @@ Rails.application.routes.draw do
 
   namespace :v1 do
     resources :users
+
+    namespace :forms do
+      resources :tests
+    end
   end
 
   post 'user_token' => 'user_token#create'

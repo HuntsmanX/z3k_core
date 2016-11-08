@@ -24,6 +24,8 @@ gem 'devise', '~> 4.2.0'
 gem 'knock'
 gem 'jwt'
 
+gem 'rest-client'
+
 gem 'active_model_serializers'
 
 group :development, :test do
