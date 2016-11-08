@@ -12,8 +12,6 @@ default: &default
 development:
   <<: *default
   database: z3k_core_development
-  username: 'dmitry'
-  password: '199016'
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -21,11 +19,7 @@ development:
 test:
   <<: *default
   database: z3k_core_test
-  username: 'dmitry'
-  password: '199016'
 
 production:
   <<: *default
   database: z3k_core_production
-  username: 'dmitry'
-  password: '199016'
