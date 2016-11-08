@@ -10,10 +10,105 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161108134117) do
+ActiveRecord::Schema.define(version: 20161108150608) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "forms_response_fields", force: :cascade do |t|
+    t.integer  "question_id"
+    t.integer  "field_type"
+    t.string   "block_key"
+    t.text     "content"
+    t.integer  "score"
+    t.boolean  "autocheck"
+    t.text     "user_content"
+    t.integer  "user_score"
+    t.boolean  "checked",                    default: false
+    t.integer  "forms_response_question_id"
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
+    t.index ["forms_response_question_id"], name: "index_forms_response_fields_on_forms_response_question_id", using: :btree
+  end
+
+  create_table "forms_response_options", force: :cascade do |t|
+    t.string   "content"
+    t.boolean  "is_correct"
+    t.integer  "field_id"
+    t.integer  "order_index"
+    t.boolean  "user_selected"
+    t.integer  "forms_response_field_id"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.index ["forms_response_field_id"], name: "index_forms_response_options_on_forms_response_field_id", using: :btree
+  end
+
+  create_table "forms_response_questions", force: :cascade do |t|
+    t.string   "content"
+    t.integer  "section_id"
+    t.integer  "order_index"
+    t.integer  "forms_response_section_id"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.index ["forms_response_section_id"], name: "index_forms_response_questions_on_forms_response_section_id", using: :btree
+  end
+
+  create_table "forms_response_sections", force: :cascade do |t|
+    t.string   "title"
+    t.integer  "time_limit"
+    t.integer  "response_id"
+    t.text     "description"
+    t.integer  "required_score"
+    t.string   "uuid"
+    t.integer  "score_units"
+    t.integer  "order_index"
+    t.integer  "acceptable_score"
+    t.integer  "forms_response_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.index ["forms_response_id"], name: "index_forms_response_sections_on_forms_response_id", using: :btree
+  end
+
+  create_table "forms_responses", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "test_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "forms_test_fields", force: :cascade do |t|
+    t.integer  "question_id"
+    t.integer  "field_type"
+    t.string   "block_key"
+    t.text     "content"
+    t.integer  "score"
+    t.boolean  "autocheck"
+    t.integer  "forms_test_question_id"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.index ["forms_test_question_id"], name: "index_forms_test_fields_on_forms_test_question_id", using: :btree
+  end
+
+  create_table "forms_test_options", force: :cascade do |t|
+    t.string   "content"
+    t.boolean  "is_correct"
+    t.integer  "field_id"
+    t.integer  "order_index"
+    t.integer  "forms_test_field_id"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.index ["forms_test_field_id"], name: "index_forms_test_options_on_forms_test_field_id", using: :btree
+  end
+
+  create_table "forms_test_questions", force: :cascade do |t|
+    t.string   "content"
+    t.integer  "order_index"
+    t.integer  "section_id"
+    t.integer  "forms_test_section_id"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.index ["forms_test_section_id"], name: "index_forms_test_questions_on_forms_test_section_id", using: :btree
+  end
 
   create_table "forms_test_sections", force: :cascade do |t|
     t.integer  "test_id"
