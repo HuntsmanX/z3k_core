@@ -22,7 +22,7 @@ test:
   <<: *default
   database: z3k_core_test
   username: 'username'
-  password: 'password'
+  password: 'password'	
 
 production:
   <<: *default
