@@ -34,6 +34,7 @@ group :development, :test do
   gem 'byebug', platform: :mri
   gem 'pry'
   gem 'pry-nav'
+  gem 'awesome_print'
 end
 
 group :development do
