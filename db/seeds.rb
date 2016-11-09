@@ -51,3 +51,19 @@ fourth_example_question_field.save(validate: false)
 fourth_example_question_field.options.create(content: "1", is_correct: true, order_index: 0)
 fourth_example_question_field.options.create(content: "2", is_correct: false, order_index: 1)
 fourth_example_question_field.options.create(content: "3", is_correct: false, order_index: 2)
+
+example_response = Forms::Response.create(name: 'ExampleResponse', test_id: example_test.id)
+example_response_section = example_response.sections.new(title: "Response Section", time_limit: 0, description: "Section description", required_score: 0, uuid: "Qdu-aApOCGA", score_units: nil, order_index: nil, acceptable_score: 0)
+example_response_section.save(validate: false)
+
+first_response_section_question = example_response_section.questions.new(content: "{'entityMap':{'0':{'type':'sequence','mutability':'IMMUTABLE','data':{}}},'blocks':[{'key':'8qdri','text':'Untitled question','type':'unstyled','depth':0,'inlineStyleRanges':[],'entityRanges':[],'data':{}},{'key':'8b3ej','text':'','type':'atomic','depth':0,'inlineStyleRanges':[],'entityRanges':[{'offset':0,'length':1,'key':0}],'data':{}},{'key':'f3de1','text':'','type':'unstyled','depth':0,'inlineStyleRanges':[],'entityRanges':[],'data':{}}]}",
+                                                                         order_index: 0)
+first_response_section_question.save(validate: false)
+
+first_response_section_question_field = first_response_section_question.fields.new(field_type: "sequence", block_key: "8b3ej", content: "", score: 1, autocheck: true,  user_content: "", user_score: 0, checked: true)
+first_response_section_question_field.save(validate: false)
+
+first_response_section_question_field.options.create( content: "1", is_correct: true, order_index: 0, user_selected: false)
+first_response_section_question_field.options.create( content: "2", is_correct: false, order_index: 1, user_selected: false)
+first_response_section_question_field.options.create( content: "3", is_correct: false, order_index: 2, user_selected: true)
+first_response_section_question_field.options.create( content: "4", is_correct: false, order_index: 3, user_selected: false)

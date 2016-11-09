@@ -13,7 +13,7 @@ class FindOrInitTestee
   def get_local
     attrs = { source_type: source_type, email: email }
 
-    Testee.find_or_initialize_by(attrs) do |t|
+    User.find_or_initialize_by(attrs) do |t|
       t.name  = name
       t.phone = phone
     end
@@ -21,9 +21,9 @@ class FindOrInitTestee
 
   def get_recruitment
     attrs  = { source_type: source_type, user_id: user_id }
-    testee = OpenStruct.new Testee.show(user_id, 'recruitment')
+    testee = OpenStruct.new User.show(user_id, 'recruitment')
 
-    Testee.find_or_initialize_by(attrs) do |t|
+    User.find_or_initialize_by(attrs) do |t|
       t.name  = testee.full_name
       t.email = testee.email
       t.phone = testee.phone
