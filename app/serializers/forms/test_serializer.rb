@@ -1,5 +1,5 @@
-class Forms::TestSerializer < ActiveModel::Serializer
-  attributes :name, :created_at
-
+class Forms::TestSerializer < ApplicationSerializer
   has_many :sections
+
+  attributes :id, :name
 end
