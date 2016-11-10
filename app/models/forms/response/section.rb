@@ -18,6 +18,6 @@ class Forms::Response::Section < ApplicationRecord
   def generate_uuid
     begin
       self.uuid = SecureRandom.urlsafe_base64 8
-    end while Response::Section.exists?(uuid: self.uuid)
+    end while self.class.exists?(uuid: self.uuid)
   end
 end
