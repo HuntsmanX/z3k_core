@@ -28,5 +28,15 @@ module Z3kCore
     config.api_only = true
 
     config.autoload_paths << Rails.root.join('lib')
+    config.generators do |g|
+      g.test_framework :rspeck,
+        fixtures: true,
+        view_specs: false,
+        helper_specks: false,
+        routing_specks: false,
+        controller_specks: true,
+        request_specs: false
+      g.fixture_replacement :factory_girl, dir: "spec/factories"
+    end
   end
 end
