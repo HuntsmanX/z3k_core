@@ -29,7 +29,7 @@ module Z3kCore
 
     config.autoload_paths << Rails.root.join('lib')
     config.generators do |g|
-      g.test_framework :rspeck,
+      g.test_framework :rspec,
         fixtures: true,
         view_specs: false,
         helper_specks: false,
