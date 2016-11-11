@@ -52,9 +52,9 @@ end
 
     factory :field_with_options do
       after(:build) do |field|
-      field.options << FactoryGirl.build(:option, field: field)
-      field.options << FactoryGirl.build(:option, content: "2", is_correct: false, order_index: 1, field: field)
-      field.options << FactoryGirl.build(:option, content: "3", is_correct: false, order_index: 2, field: field)
+        field.options << FactoryGirl.build(:option, field: field)
+        field.options << FactoryGirl.build(:option, content: "2", is_correct: false, order_index: 1, field: field)
+        field.options << FactoryGirl.build(:option, content: "3", is_correct: false, order_index: 2, field: field)
     end
   end
 end

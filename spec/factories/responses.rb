@@ -30,7 +30,7 @@ FactoryGirl.define do
           section.questions << FactoryGirl.create(:response_question_with_fields, section: section)
       end
     end
-    end
+  end
 
     factory :response_question, class: Forms::Response::Question do |f|
       f.content     { "{'entityMap':{'0':{'type':'sequence','mutability':'IMMUTABLE','data':{}}},'blocks':[{'key':'8qdri','text':'Untitled question','type':'unstyled','depth':0,'inlineStyleRanges':[],'entityRanges':[],'data':{}},{'key':'8b3ej','text':' ','type':'atomic','depth':0,'inlineStyleRanges':[],'entityRanges':[{'offset':0,'length':1,'key':0}],'data':{}},{'key':'f3de1','text':'','type':'unstyled','depth':0,'inlineStyleRanges':[],'entityRanges':[],'data':{}}]}" }
@@ -40,7 +40,7 @@ FactoryGirl.define do
           question.fields << FactoryGirl.build(:response_field_with_options, question: question)
       end
     end
-    end
+  end
 
     factory :response_field, class: Forms::Response::Field do |f|
       f.field_type { "sequence" }
@@ -52,12 +52,12 @@ FactoryGirl.define do
 
       factory :response_field_with_options do
         after(:build) do |field|
-        field.options << FactoryGirl.build(:response_option, field: field)
-        field.options << FactoryGirl.build(:response_option, content: "2", is_correct: false, order_index: 1, field: field)
-        field.options << FactoryGirl.build(:response_option, content: "3", is_correct: false, order_index: 2, field: field)
+          field.options << FactoryGirl.build(:response_option, field: field)
+          field.options << FactoryGirl.build(:response_option, content: "2", is_correct: false, order_index: 1, field: field)
+          field.options << FactoryGirl.build(:response_option, content: "3", is_correct: false, order_index: 2, field: field)
       end
     end
-    end
+  end
 
     factory :response_option, class: Forms::Response::Option  do |f|
       f.content       { "1" }
@@ -65,4 +65,4 @@ FactoryGirl.define do
       f.is_correct    { true }
       f.order_index   { 0 }
     end
-    end
+  end
