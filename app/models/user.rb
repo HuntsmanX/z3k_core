@@ -4,6 +4,9 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
+  #TODO: Add scope
+  has_many :responses, class_name: 'Forms::Response'
+
   alias_method :authenticate, :valid_password?
 
 

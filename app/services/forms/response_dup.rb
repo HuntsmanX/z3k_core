@@ -3,7 +3,7 @@ class ResponseDup
 
   def initialize(testee, test_id)
     @response = testee.responses.new
-    @test     = Test.find_by id: test_id
+    @test     = Forms::Test.find_by id: test_id
 
     duplicate_test!
   end
