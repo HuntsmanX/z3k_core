@@ -1,4 +1,4 @@
-class ResponseDup
+class Forms::ResponseDup
   attr_reader :response
 
   def initialize(testee, test_id)
