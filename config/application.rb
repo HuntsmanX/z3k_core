@@ -28,8 +28,6 @@ module Z3kCore
     config.api_only = true
     config.middleware.use "OliveBranch::Middleware"
 
-    config.middleware.use "OliveBranch::Middleware"
-
     config.autoload_paths << Rails.root.join('lib')
     config.generators do |g|
       g.test_framework :rspec,

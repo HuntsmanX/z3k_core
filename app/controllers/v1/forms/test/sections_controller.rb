@@ -1,13 +1,13 @@
 class V1::Forms::Test::SectionsController < ApplicationController
 
   def create
-    section = Forms::Test::Section.new section_params
+    section = Test::Section.new section_params
     section.save
     respond_with section
   end
 
   def update
-    section = Forms::Test::Section.find_by_id params[:id]
+    section = Test::Section.find_by_id params[:id]
 
     if section.update_attributes section_params
       render json: { id: section.id }
@@ -18,7 +18,7 @@ class V1::Forms::Test::SectionsController < ApplicationController
   end
 
   def destroy
-    section = Forms::Test::Section.find_by_id params[:id]
+    section = Test::Section.find_by_id params[:id]
     section.destroy
     render json: {}
   end
