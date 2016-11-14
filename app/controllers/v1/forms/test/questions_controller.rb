@@ -1,19 +1,19 @@
 class V1::Forms::Test::QuestionsController < ApplicationController
 
   def create
-    question = Test::Question.new question_params
+    question = Forms::Test::Question.new question_params
     question.save
     respond_with question
   end
 
   def update
-    question = Test::Question.find params[:id]
+    question = Forms::Test::Question.find params[:id]
     question.update_attributes question_params
     respond_with question
   end
 
   def destroy
-    question = Test::Question.find params[:id]
+    question = Forms::Test::Question.find params[:id]
     question.destroy
     render json: {}
   end
