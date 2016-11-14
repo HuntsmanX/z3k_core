@@ -6,8 +6,6 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
-  enum source_type: [:local, :staff, :recruitment]
-
   has_many :responses, class_name: 'Forms::Response' #TODO: Add scope
   belongs_to :city
 
