@@ -27,6 +27,8 @@ module Z3kCore
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
 
+    config.middleware.use "OliveBranch::Middleware"
+
     config.autoload_paths << Rails.root.join('lib')
     config.generators do |g|
       g.test_framework :rspec,
