@@ -20,7 +20,7 @@ FactoryGirl.define do
 
     factory :response_section, class: Forms::Response::Section do |f|
       f.title             { Faker::StarWars.planet }
-      f.required_score    { Faker::Number.between(1, 50) }
+      f.required_score    { 50 }
       f.acceptable_score  { Faker::Number.between(1, 50) }
       f.description       { Faker::ChuckNorris.fact }
       f.time_limit        { Faker::Number.between(1, 50) }

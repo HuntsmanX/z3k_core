@@ -7,4 +7,9 @@ describe ResponseSectionChecker do
   it "cheks wrong response section" do
     expect(ResponseSectionChecker.can_visit_next_section?(full_response.sections.last)).to be false
   end
+
+	it "cheks right response section" do
+    full_response.sections.last.update(required_score: 1)
+    expect(ResponseSectionChecker.can_visit_next_section?(full_response.sections.last)).to be true
+	end
 end
