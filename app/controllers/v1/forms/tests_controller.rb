@@ -2,7 +2,7 @@ class V1::Forms::TestsController < ApplicationController
 
   def index
     @tests = ::Forms::Test.all
-    render json: @tests
+    render json: @tests, with_nested: false
   end
 
   def show

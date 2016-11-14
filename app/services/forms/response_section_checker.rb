@@ -1,4 +1,4 @@
-class ResponseSectionChecker
+class Forms::ResponseSectionChecker
 
   methods_names_for_select = [:check_checkboxes, :check_dropdown,
                               :check_sequence, :check_radio_buttons,
