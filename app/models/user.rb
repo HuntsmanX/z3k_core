@@ -6,6 +6,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
+  has_many :responses, class_name: 'Forms::Response' #TODO: Add scope
   belongs_to :city
 
 

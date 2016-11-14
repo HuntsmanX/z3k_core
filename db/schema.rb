@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161110140928) do
+ActiveRecord::Schema.define(version: 20161111105850) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,7 +76,9 @@ ActiveRecord::Schema.define(version: 20161110140928) do
     t.integer  "test_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "user_id"
     t.index ["test_id"], name: "index_forms_responses_on_test_id", using: :btree
+    t.index ["user_id"], name: "index_forms_responses_on_user_id", using: :btree
   end
 
   create_table "forms_test_fields", force: :cascade do |t|
@@ -165,4 +167,5 @@ ActiveRecord::Schema.define(version: 20161110140928) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
+  add_foreign_key "forms_responses", "users"
 end
