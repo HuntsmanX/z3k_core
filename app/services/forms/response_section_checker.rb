@@ -18,7 +18,7 @@ class Forms::ResponseSectionChecker
   end
 
   methods_names_for_select.each do |method_name|
-    ResponseSectionChecker.define_singleton_method(method_name) do |field|
+    Forms::ResponseSectionChecker.define_singleton_method(method_name) do |field|
        if field.options.where(is_correct: true).pluck(:user_selected).uniq.all? {|correct| correct.present?}
          field.update(user_score: field.score)
          score = field.score
@@ -31,7 +31,7 @@ class Forms::ResponseSectionChecker
   end
 
   method_names_for_text.each do |method_name|
-    ResponseSectionChecker.define_singleton_method(method_name) do |field|
+    Forms::ResponseSectionChecker.define_singleton_method(method_name) do |field|
       if field.content == field.user_content
         field.update(user_score: field.score)
         score = field.score

@@ -9,14 +9,11 @@ class V1::Forms::ResponsesController < ApplicationController
 
     if testee.save
       response = ::Forms::ResponseDup.new(testee, response_params[:test_id]).response
-      redirect_to start_path(response.id) and return
+      render json: response and return
     else
-      redirect_to responses_path, alert: testee.errors.full_messages.join(', ') and return
+      render json: testee, status: 422, adapter: :json_api, serializer: ActiveModel::Serializer::ErrorSerializer and return
     end
-  end
 
-  def start
-    respond_with ::Forms::Response.find_by_id(params[:response_id])
   end
 
   private
