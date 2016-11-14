@@ -80,6 +80,9 @@ GEM
       jsonapi-renderer (= 0.1.1.beta1)
     jsonapi-parser (0.1.1.beta3)
     jsonapi-renderer (0.1.1.beta1)
+    jsonb_accessor (1.0.0.beta.2)
+      activerecord (>= 5.0.0)
+      pg (>= 0.18.1)
     jwt (1.5.6)
     knock (2.0)
       bcrypt (~> 3.1)
@@ -201,6 +204,7 @@ DEPENDENCIES
   factory_girl_rails
   faker
   friendly_id (~> 5.1.0)
+  jsonb_accessor (= 1.0.0.beta.2)
   jwt
   knock
   listen (~> 3.0.5)

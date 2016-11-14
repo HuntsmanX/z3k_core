@@ -1,13 +1,28 @@
 class User < ApplicationRecord
+  require 'z3k_transliterator.rb'
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
-  #TODO: Add scope
-  has_many :responses, class_name: 'Forms::Response'
+  has_many :responses, class_name: 'Forms::Response' #TODO: Add scope
+  belongs_to :city
+
+
+  validates_presence_of :city
+
+
+  before_create :set_timezone, :transliterate_name
+  before_update :transliterate_name
 
   alias_method :authenticate, :valid_password?
+
+  jsonb_accessor :names,
+                 first_name: :string,
+                 first_name_eng: :string,
+                 last_name: :string,
+                 last_name_eng: :string
 
 
   class << self
@@ -43,6 +58,28 @@ class User < ApplicationRecord
   end
 
   private
+
+  def set_timezone
+    self.timezone = self.city.timezone
+  end
+
+  def transliterate_name
+    if self.city.locale == 'EN'
+      self.first_name = first_name_eng.strip
+      self.last_name = last_name_eng.strip
+    else
+      if first_name_changed?
+        first_name.strip!
+        translated_name = Transliteration.where("UPPER(russian) = ?", first_name.mb_chars.upcase).first #TODO: add missing transliteration mailer
+        self.first_name_eng = translated_name.english
+      end
+
+      if last_name_changed?
+        self.last_name_eng = Z3kTransliterator.transliterate(last_name)
+      end
+
+    end
+  end
 
   def self.decorate_response(user_from_staff)
     user_from_staff.keep_if { |k, v| (User.column_names - ['id']).index k }
