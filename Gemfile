@@ -26,8 +26,11 @@ gem 'jwt'
 gem 'friendly_id', '~> 5.1.0'
 
 gem 'rest-client'
+gem 'olive_branch'
 
 gem 'active_model_serializers'
+gem 'jsonb_accessor', '1.0.0.beta.2'
+gem 'kaminari'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -35,10 +38,15 @@ group :development, :test do
   gem 'pry'
   gem 'pry-nav'
   gem 'awesome_print'
+  gem 'rspec'
+  gem 'rspec-core'
+  gem 'rspec-rails'
+  gem 'factory_girl_rails'
 end
 
 group :development do
   gem 'listen', '~> 3.0.5'
+  gem 'faker'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   # gem 'spring'
   # gem 'spring-watcher-listen', '~> 2.0.0'

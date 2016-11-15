@@ -1,7 +1,24 @@
 class V1::Forms::Response::SectionsController < ApplicationController
 
 	def edit
-		respond_with Response::Section.includes({questions: [{fields: :options}]}).friendly.find(params[:id])
+		respond_with Forms::Response::Section.includes({questions: [{fields: :options}]}).friendly.find(params[:id])
+	end
+
+	def update
+		response_section = ::Forms::Response::Section.find_by_id(params[:id])
+		response_section.update section_params
+		show_next_section = ::Forms::ResponseSectionChecker.can_visit_next_section?(response_section)
+		next_response_section = response_section.next_section
+		response = show_next_section ? next_response_section : {}
+		render json: response
+	end
+
+	def section_params
+		params.require(:section).permit(:id, :title, :time_limit,
+																		questions_attributes: [:id, :section_id, :content,
+																													 fields_attributes: [:id, :field_type, :block_key,
+																																							 :user_content, :score, :autocheck, options_attributes:
+																																									 [:id, :content, :user_selected, :order_index]]])
 	end
 
 end

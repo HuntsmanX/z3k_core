@@ -1,8 +1,8 @@
 class V1::Forms::TestsController < ApplicationController
 
   def index
-    @tests = ::Forms::Test.includes(:sections).all
-    render json: @tests
+    tests = ::Forms::Test.all.page(params[:page])
+    render json: tests, with_nested: false, meta: pagination_dict(tests)
   end
 
   def show
@@ -11,17 +11,17 @@ class V1::Forms::TestsController < ApplicationController
   end
 
   def create
-    @test = ::Forms::Test.new test_params
-    if @test.save
-      render json: @test
+    test = ::Forms::Test.new test_params
+    if test.save
+      render json: test
     else
-      render json: @test.errors.messages, status: 422
+      render json: test.errors.messages, status: 422
     end
   end
 
   def destroy
-    @test = ::Forms::Test.find params[:id]
-    @test.destroy
+    test = ::Forms::Test.find params[:id]
+    test.destroy
     render json: {}
   end
 

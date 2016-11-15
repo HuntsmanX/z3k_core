@@ -3,6 +3,7 @@ class Forms::Response::Section < ApplicationRecord
   friendly_id :uuid
 
   enum score_units: [:points, :percent]
+  default_scope -> { order(:order_index) }
 
   before_create :generate_uuid
 
@@ -13,6 +14,10 @@ class Forms::Response::Section < ApplicationRecord
 
   validates :time_limit, numericality: true
 
+  def next_section
+    self.response.sections.where('order_index > ?', self.order_index).first
+  end
+
   private
 
   def generate_uuid
@@ -20,4 +25,5 @@ class Forms::Response::Section < ApplicationRecord
       self.uuid = SecureRandom.urlsafe_base64 8
     end while self.class.exists?(uuid: self.uuid)
   end
+
 end

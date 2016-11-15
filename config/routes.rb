@@ -18,9 +18,7 @@ Rails.application.routes.draw do
         resources :questions
       end
 
-      resources :responses do
-        get 'start', action: 'start'
-      end
+      resources :responses
 
       namespace :response do
         resources :sections

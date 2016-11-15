@@ -1,5 +1,5 @@
 class Forms::TestSerializer < ApplicationSerializer
-  has_many :sections
-
   attributes :id, :name
+
+  has_many :sections, if: :include_nested?
 end

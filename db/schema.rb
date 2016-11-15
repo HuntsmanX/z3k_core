@@ -10,10 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161109112535) do
+ActiveRecord::Schema.define(version: 20161114104500) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "cities", force: :cascade do |t|
+    t.string "name"
+    t.string "locale"
+    t.string "timezone"
+  end
 
   create_table "forms_response_fields", force: :cascade do |t|
     t.integer  "question_id"
@@ -70,7 +76,9 @@ ActiveRecord::Schema.define(version: 20161109112535) do
     t.integer  "test_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "user_id"
     t.index ["test_id"], name: "index_forms_responses_on_test_id", using: :btree
+    t.index ["user_id"], name: "index_forms_responses_on_user_id", using: :btree
   end
 
   create_table "forms_test_fields", force: :cascade do |t|
@@ -129,13 +137,18 @@ ActiveRecord::Schema.define(version: 20161109112535) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "transliterations", force: :cascade do |t|
+    t.string "russian"
+    t.string "english"
+  end
+
   create_table "users", force: :cascade do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
+    t.string   "email",                  default: "",                                                                             null: false
+    t.string   "encrypted_password",     default: "",                                                                             null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",          default: 0,                                                                              null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -144,11 +157,17 @@ ActiveRecord::Schema.define(version: 20161109112535) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.datetime "created_at",                                                                                                      null: false
+    t.datetime "updated_at",                                                                                                      null: false
+    t.integer  "city_id"
+    t.string   "timezone"
+    t.jsonb    "names",                  default: {"last_name"=>"", "first_name"=>"", "last_name_eng"=>"", "first_name_eng"=>""}
+    t.integer  "staff_id"
+    t.integer  "recruitment_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
+  add_foreign_key "forms_responses", "users"
 end

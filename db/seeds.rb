@@ -1,3 +1,5 @@
+require 'csv'
+
 example_test = Forms::Test.create(name: 'ExampleTest')
 
 example_section = example_test.sections.create(title: 'FirstSection', time_limit: 60,
@@ -67,3 +69,13 @@ first_response_section_question_field.options.create( content: "1", is_correct: 
 first_response_section_question_field.options.create( content: "2", is_correct: false, order_index: 1, user_selected: false)
 first_response_section_question_field.options.create( content: "3", is_correct: false, order_index: 2, user_selected: true)
 first_response_section_question_field.options.create( content: "4", is_correct: false, order_index: 3, user_selected: false)
+
+
+
+#Cities
+City.find_or_create_by(name: 'Kharkiv', locale: 'RU', timezone: 'Europe/Kiev')
+City.find_or_create_by(name: 'Lviv', locale: 'RU', timezone: 'Europe/Kiev')
+City.find_or_create_by(name: 'Coimbatore', locale: 'EN', timezone: 'Asia/Kolkata')
+
+#Transliterations
+CSV.parse(File.read('lib/import_data/transliterations.csv'), headers: true).each { |row| Transliteration.find_or_create_by(row.to_h) }
