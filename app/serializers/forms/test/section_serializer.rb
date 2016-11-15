@@ -3,6 +3,7 @@ class Forms::Test::SectionSerializer < ApplicationSerializer
   has_many   :questions
 
   attributes :id,
+             :test_id,
              :title,
              :description,
              :time_limit,

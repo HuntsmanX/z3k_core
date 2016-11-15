@@ -7,7 +7,7 @@ class V1::Forms::TestsController < ApplicationController
 
   def show
     test = ::Forms::Test.find params[:id]
-    render json: test
+    render json: test, include: [sections: [questions: [fields: :options]]]
   end
 
   def create
