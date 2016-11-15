@@ -3,7 +3,7 @@ class V1::UsersController < ApplicationController
   before_action :authenticate_user
 
   def index
-    render json: User.all, each_serializer: ::UserSerializer
+    render json: User.all, meta: pagination_dict(posts)
   end
 
 end
