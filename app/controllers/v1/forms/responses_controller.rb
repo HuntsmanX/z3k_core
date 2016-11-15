@@ -1,7 +1,8 @@
 class V1::Forms::ResponsesController < ApplicationController
 
   def index
-    render json: ::Forms::Response.all, each_serializer: Forms::ResponseSerializer
+    responses = ::Forms::Response.all.page(params[:page])
+    render json: responses, with_nested: false, meta: pagination_dict(responses)
   end
 
   def create
