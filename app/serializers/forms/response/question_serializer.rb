@@ -1,6 +1,6 @@
-class Forms::Response::QuestionSerializer < ActiveModel::Serializer
+class Forms::Response::QuestionSerializer < ApplicationSerializer
   attributes :content, :order_index, :section_id, :forms_test_section_id
 
-  has_many :sections
-  has_many :fields
+  belongs_to :section
+  has_many   :fields
 end
