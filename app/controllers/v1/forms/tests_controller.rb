@@ -6,8 +6,8 @@ class V1::Forms::TestsController < ApplicationController
   end
 
   def show
-    @test = ::Forms::Test.find params[:id]
-    render json: @test
+    test = ::Forms::Test.find params[:id]
+    render json: test
   end
 
   def create

@@ -1,24 +1,27 @@
 class V1::Forms::Test::SectionsController < ApplicationController
 
   def create
-    section = Forms::Test::Section.new section_params
-    section.save
-    respond_with section
+    section = ::Forms::Test::Section.new section_params
+    if section.save
+      render json: section
+    else
+      render json: section.errors.messages, status: 422
+    end
   end
 
   def update
-    section = Forms::Test::Section.find_by_id params[:id]
+    section = ::Forms::Test::Section.find_by_id params[:id]
 
     if section.update_attributes section_params
-      render json: { id: section.id }
+      render json: section
     else
-      respond_with section
+      render json: section.errors.messages, status: 422
     end
 
   end
 
   def destroy
-    section = Forms::Test::Section.find_by_id params[:id]
+    section = ::Forms::Test::Section.find_by_id params[:id]
     section.destroy
     render json: {}
   end

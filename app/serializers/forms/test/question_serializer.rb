@@ -1,5 +1,5 @@
 class Forms::Test::QuestionSerializer < ApplicationSerializer
-  attributes :content, :order_index, :section_id, :forms_test_section_id
+  attributes :content, :order_index
 
   belongs_to :sections
   has_many   :fields
