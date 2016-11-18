@@ -29,7 +29,21 @@ class V1::Forms::Test::SectionsController < ApplicationController
   private
 
   def section_params
-    params.require(:section).permit(:title, :description, :time_limit, :required_score, :test_id)
+    params.require(:section).permit(
+      :test_id,
+      :title,
+      :description,
+      :time_limit,
+      :bonus_time,
+      :required_score,
+      :required_score_units,
+      :acceptable_score,
+      :acceptable_score_units,
+      :order_index,
+      :shuffle_questions,
+      :questions_to_show,
+      :show_next_section
+    )
   end
 
 end
