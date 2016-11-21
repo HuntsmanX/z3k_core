@@ -1,5 +1,5 @@
 class Forms::ResponseSerializer < ApplicationSerializer
-  attributes :name, :created_at
+  attributes :id, :name, :created_at
 
   has_many :sections, if: :include_nested?
 

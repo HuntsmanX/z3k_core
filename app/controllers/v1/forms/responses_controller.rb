@@ -5,6 +5,11 @@ class V1::Forms::ResponsesController < ApplicationController
     render json: responses, with_nested: false, meta: pagination_dict(responses)
   end
 
+  def show
+    response = ::Forms::Response.find params[:id]
+    render json: response, include: [sections: [questions: [fields: :options]]]
+  end
+
   def create
     testee = ::Forms::FindOrInitTestee.new(response_params[:testee]).testee
 
