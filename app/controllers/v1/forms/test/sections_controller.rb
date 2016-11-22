@@ -3,7 +3,7 @@ class V1::Forms::Test::SectionsController < ApplicationController
   def create
     section = ::Forms::Test::Section.new section_params
     if section.save
-      render json: section
+      render json: section, include: [questions: [fields: :options]]
     else
       render json: section.errors.messages, status: 422
     end
@@ -13,16 +13,22 @@ class V1::Forms::Test::SectionsController < ApplicationController
     section = ::Forms::Test::Section.find_by_id params[:id]
 
     if section.update_attributes section_params
-      render json: section
+      render json: section, include: [questions: [fields: :options]]
     else
       render json: section.errors.messages, status: 422
     end
-
   end
 
   def destroy
     section = ::Forms::Test::Section.find_by_id params[:id]
     section.destroy
+    render json: {}
+  end
+
+  def reorder
+    params[:order].each do |id, index|
+      ::Forms::Test::Section.find(id).update_attribute :order_index, index
+    end
     render json: {}
   end
 

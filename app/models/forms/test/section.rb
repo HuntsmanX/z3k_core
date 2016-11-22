@@ -10,15 +10,13 @@ class Forms::Test::Section < ApplicationRecord
   enum show_next_section:      [:always, :score]
 
   validates :title,             presence: true
-  validates :time_limit,        numericality: true, allow_blank: true
-  validates :bonus_time,        numericality: true, allow_blank: true
-  validates :questions_to_show, numericality: true, allow_blank: true
+  validates :time_limit,        numericality: true
+  validates :bonus_time,        numericality: true
+  validates :questions_to_show, numericality: true
   validates :required_score,    numericality: true
   validates :acceptable_score,  numericality: true
 
   validate  :max_required_score
-
-  default_scope -> { order(:order_index) }
 
   def max_required_score
     return unless required_score_units == 'percent' && required_score.to_i > 100
