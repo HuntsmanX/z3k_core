@@ -19,9 +19,12 @@ class ParamsInflector
           rescue JSON::ParserError
             next
           end
-
           if inflection == "camel"
-            new_response.deep_transform_keys! { |k| k.camelize(:lower) }
+            if new_response.class == Array
+              new_response.each{|element| element.deep_transform_keys! { |k| k.camelize(:lower) }}
+            else
+              new_response.deep_transform_keys! { |k| k.camelize(:lower) }
+            end
           elsif inflection == "dash"
             new_response.deep_transform_keys! &:dasherize
           end
@@ -34,7 +37,6 @@ class ParamsInflector
 
   def underscore_params env
     rack_input = env["rack.input"].read
-
     if rack_input.present?
       request_body = JSON.parse rack_input
       request_body.deep_transform_keys! &:underscore
