@@ -1,7 +1,7 @@
 class V1::Forms::TestsController < ApplicationController
 
   def index
-    tests = ::Forms::Test.all.page(params[:page])
+    tests = ::Forms::Test.all.page(params[:page]).per(params[:per])
     render json: tests, with_nested: false, meta: pagination_dict(tests)
   end
 

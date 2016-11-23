@@ -14,8 +14,12 @@ Rails.application.routes.draw do
       resources :tests
 
       namespace :test do
-        resources :sections
-        resources :questions
+        resources :sections do
+          put :reorder, on: :collection
+        end
+        resources :questions do
+          put :reorder, on: :collection
+        end
       end
 
       resources :responses
@@ -29,5 +33,5 @@ Rails.application.routes.draw do
 
     end
   end
-  
+
 end
