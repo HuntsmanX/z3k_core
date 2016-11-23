@@ -5,6 +5,7 @@ class Forms::FindOrInitTestee
   end
 
   def testee
+    source_type ||= "recruitment"
     self.send "get_#{source_type}"
   end
 
@@ -21,17 +22,14 @@ class Forms::FindOrInitTestee
   end
 
   def get_recruitment
-    testee = OpenStruct.new Forms::Testee.show(user_id, 'recruitment')
-
-    User.find_or_initialize_by(recruitment_id: user_id) do |t|
+    testee = OpenStruct.new Forms::Testee.show(@params, 'recruitment')
+    User.find_or_initialize_by(recruitment_id: @params) do |t|
       t.city_id    = testee.city_id
       t.email      = testee.email
-      # t.phone    = testee.phone TODO: add contacts to user
       t.first_name = testee.full_name.split&.[](0)
       t.last_name  = testee.full_name.split&.[](1)
       t.password   = SecureRandom.hex(4)
     end
-
   end
 
   def method_missing name, *args, &block

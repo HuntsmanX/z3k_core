@@ -7,9 +7,7 @@ class V1::Forms::TesteesController < ApplicationController
 	end
 
 	def find
-		users = Forms::Testee.by_name(params[:letters],'recruitment')['employees']
-		users.map { |hash| hash['value'] = hash.delete 'id' }
-		users.map { |hash| hash['label'] = hash.delete 'full_name_eng' }
+		users = Forms::Testee.by_name(params[:q],'recruitment')['employees']
 		render json: users
 	end
 

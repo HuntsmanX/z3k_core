@@ -20,7 +20,7 @@ class ParamsInflector
             next
           end
           if inflection == "camel"
-            if new_response.class == Array
+            if new_response.is_a? Array
               new_response.each{|element| element.deep_transform_keys! { |k| k.camelize(:lower) }}
             else
               new_response.deep_transform_keys! { |k| k.camelize(:lower) }

@@ -11,8 +11,7 @@ class V1::Forms::ResponsesController < ApplicationController
   end
 
   def create
-    testee = ::Forms::FindOrInitTestee.new(response_params[:testee]).testee
-
+    testee = ::Forms::FindOrInitTestee.new(response_params[:user_id]).testee
     if testee.save
       response = ::Forms::ResponseDup.new(testee, response_params[:test_id]).response
       render json: response and return
@@ -25,7 +24,7 @@ class V1::Forms::ResponsesController < ApplicationController
   private
 
   def response_params
-    params.require(:response).permit(:test_id, testee: [:source_type, :user_id, :first_name, :last_name, :email, :phone, :city_id])
+    params.require(:response).permit(:test_id, :user_id)
   end
 
 end
