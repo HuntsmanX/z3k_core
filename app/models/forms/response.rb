@@ -13,11 +13,6 @@ class Forms::Response < ApplicationRecord
     duplicate_sections(test.sections) if test.sections.any?
   end
 
-  def user_full_name_eng
-    User.find_by_id(self.user.id).full_name
-  end
-
-
   private
   def duplicate_sections(sections)
     sections.each do |section|

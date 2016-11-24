@@ -3,4 +3,8 @@ class Forms::ResponseSerializer < ApplicationSerializer
 
   has_many :sections, if: :include_nested?
 
+  def user_full_name_eng
+    object.user.full_name
+  end
+
 end
