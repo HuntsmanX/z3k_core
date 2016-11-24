@@ -57,6 +57,10 @@ class User < ApplicationRecord
 
   end
 
+  def full_name
+    self.first_name_eng + " " + self.last_name_eng
+  end
+
   private
 
   def set_timezone
