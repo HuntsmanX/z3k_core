@@ -13,6 +13,11 @@ class V1::Forms::Response::SectionsController < ApplicationController
 		render json: response
 	end
 
+	def show
+		response_section = Forms::Response::Section.friendly.find(params[:id])
+		render json: response_section, include:  [questions: [fields: :options]]
+	end
+
 	def section_params
 		params.require(:section).permit(:id, :title, :time_limit,
 																		questions_attributes: [:id, :section_id, :content,
