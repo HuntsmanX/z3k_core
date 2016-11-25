@@ -14,7 +14,8 @@ class Forms::ResponseSectionChecker
         user_score << self.send("check_#{field.field_type}", field)
       end
     end
-     (user_score.grep(Integer).reduce(:+) >= response_section.required_score)? true : false
+     scores = user_score.grep(Integer).reduce(:+) || -1
+     (scores >= response_section.required_score)? true : false
   end
 
   methods_names_for_select.each do |method_name|
