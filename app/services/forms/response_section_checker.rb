@@ -15,7 +15,7 @@ class Forms::ResponseSectionChecker
       end
     end
      scores = user_score.grep(Integer).reduce(:+) || -1
-     (scores >= response_section.required_score)? true : false
+     scores >= response_section.required_score
   end
 
   methods_names_for_select.each do |method_name|
