@@ -5,7 +5,7 @@ class V1::Forms::Response::SectionsController < ApplicationController
 	end
 
 	def update
-		response_section = ::Forms::Response::Section.find_by_id(params[:id])
+		response_section = ::Forms::Response::Section.friendly.find(params[:uuid])
 		response_section.update section_params
 		show_next_section = ::Forms::ResponseSectionChecker.can_visit_next_section?(response_section)
 		next_response_section = response_section.next_section
@@ -19,11 +19,11 @@ class V1::Forms::Response::SectionsController < ApplicationController
 	end
 
 	def section_params
-		params.require(:section).permit(:id, :title, :time_limit,
+		params.require(:section).permit(:title, :time_limit, :uuid,
 																		questions_attributes: [:id, :section_id, :content,
 																													 fields_attributes: [:id, :field_type, :block_key,
 																																							 :user_content, :score, :autocheck, options_attributes:
-																																									 [:id, :content, :user_selected, :order_index]]])
+																																									 [:id, :content, :user_selected, :is_correct, :order_index]]])
 	end
 
 end

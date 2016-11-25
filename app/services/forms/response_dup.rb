@@ -24,6 +24,7 @@ class Forms::ResponseDup
         title:            section.title,
         time_limit:       section.time_limit,
         description:      section.description,
+        order_index:      section.order_index,
         required_score:   section.required_score,
         acceptable_score: section.acceptable_score
       )

@@ -58,7 +58,7 @@ class User < ApplicationRecord
   end
 
   def full_name
-    self.first_name_eng + " " + self.last_name_eng
+    self.first_name_eng.to_s + " " + self.last_name_eng.to_s
   end
 
   private
@@ -75,7 +75,7 @@ class User < ApplicationRecord
       if first_name_changed?
         first_name.strip!
         translated_name = Transliteration.where("UPPER(russian) = ?", first_name.mb_chars.upcase).first #TODO: add missing transliteration mailer
-        self.first_name_eng = translated_name.english
+        self.first_name_eng = translated_name&.english
       end
 
       if last_name_changed?
