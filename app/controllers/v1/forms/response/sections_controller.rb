@@ -19,7 +19,7 @@ class V1::Forms::Response::SectionsController < ApplicationController
 	end
 
 	def section_params
-		params.require(:section).permit(:title, :time_limit, :uuid,
+		params.require(:section).permit(:title, :time_limit, :bonus_time, :order_index, :uuid,
 																		questions_attributes: [:id, :section_id, :content,
 																													 fields_attributes: [:id, :field_type, :block_key,
 																																							 :user_content, :score, :autocheck, options_attributes:
