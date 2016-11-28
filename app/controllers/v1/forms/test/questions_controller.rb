@@ -35,11 +35,23 @@ class V1::Forms::Test::QuestionsController < ApplicationController
 
   def question_params
     params.require(:question).permit(
-      :section_id, :content, :order_index,
+      :section_id,
+      :content,
+      :order_index,
       fields_attributes: [
-        :id, :field_type, :block_key, :content, :score, :autocheck, :_destroy,
+        :id,
+        :field_type,
+        :block_key,
+        :content,
+        :score,
+        :autocheck,
+        :_destroy,
         options_attributes: [
-          :id, :content, :is_correct, :order_index, :_destroy
+          :id,
+          :content,
+          :is_correct,
+          :order_index,
+          :_destroy
         ]
       ]
     )
