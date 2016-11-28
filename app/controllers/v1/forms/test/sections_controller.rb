@@ -3,7 +3,7 @@ class V1::Forms::Test::SectionsController < ApplicationController
   def create
     section = ::Forms::Test::Section.new section_params
     if section.save
-      render json: section, include: [questions: [fields: :options]]
+      render json: section, with_nested: false
     else
       render json: section.errors.messages, status: 422
     end
@@ -13,7 +13,7 @@ class V1::Forms::Test::SectionsController < ApplicationController
     section = ::Forms::Test::Section.find_by_id params[:id]
 
     if section.update_attributes section_params
-      render json: section, include: [questions: [fields: :options]]
+      render json: section, with_nested: false
     else
       render json: section.errors.messages, status: 422
     end

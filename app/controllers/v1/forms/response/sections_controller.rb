@@ -15,15 +15,36 @@ class V1::Forms::Response::SectionsController < ApplicationController
 
 	def show
 		response_section = Forms::Response::Section.friendly.find(params[:id])
-		render json: response_section, include:  [questions: [fields: :options]]
+		render json: response_section, include: [questions: [fields: :options]]
 	end
 
 	def section_params
-		params.require(:section).permit(:title, :time_limit, :bonus_time, :order_index, :uuid,
-																		questions_attributes: [:id, :section_id, :content,
-																													 fields_attributes: [:id, :field_type, :block_key,
-																																							 :user_content, :score, :autocheck, options_attributes:
-																																									 [:id, :content, :user_selected, :is_correct, :order_index]]])
+		params.require(:section).permit(
+      :title,
+      :time_limit,
+      :bonus_time,
+      :uuid,
+			questions_attributes: [
+        :id,
+        :section_id,
+        :content,
+				fields_attributes: [
+          :id,
+          :field_type,
+          :block_key,
+          :user_content,
+          :score,
+          :autocheck,
+          options_attributes: [
+            :id,
+            :content,
+            :user_selected,
+            :is_correct,
+            :order_index
+          ]
+        ]
+      ]
+    )
 	end
 
 end
