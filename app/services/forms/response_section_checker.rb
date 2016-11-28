@@ -1,11 +1,18 @@
 class Forms::ResponseSectionChecker
 
-  methods_names_for_select = [:check_checkboxes, :check_dropdown,
-                              :check_sequence, :check_radio_buttons,
-                              :check_inline_dropdown]
+  methods_names_for_select = [
+    :check_checkboxes,
+    :check_dropdown,
+    :check_sequence,
+    :check_radio_buttons,
+    :check_inline_dropdown
+  ]
 
-  method_names_for_text = [:check_text_input, :check_text_area,
-                           :check_inline_text_input]
+  method_names_for_text = [
+    :check_text_input,
+    :check_text_area,
+    :check_inline_text_input
+  ]
 
   def self.can_visit_next_section?(response_section)
     user_score = []
