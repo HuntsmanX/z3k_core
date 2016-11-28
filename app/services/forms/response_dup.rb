@@ -23,6 +23,7 @@ class Forms::ResponseDup
       response_section = response.sections.create(
         title:            section.title,
         time_limit:       section.time_limit,
+        bonus_time:       section.bonus_time,
         description:      section.description,
         order_index:      section.order_index,
         required_score:   section.required_score,

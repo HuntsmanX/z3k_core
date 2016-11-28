@@ -22,6 +22,7 @@ class V1::Forms::Response::SectionsController < ApplicationController
 		params.require(:section).permit(
       :title,
       :time_limit,
+      :bonus_time,
       :uuid,
 			questions_attributes: [
         :id,
