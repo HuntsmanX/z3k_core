@@ -15,12 +15,9 @@ class V1::Forms::Response::QuestionsController < ApplicationController
   def question_params
     params.require(:question).permit(
         :section_id,
-        :order_index,
         fields_attributes: [
             :id,
-            :score,
             :user_score,
-            :_destroy
         ]
     )
   end
