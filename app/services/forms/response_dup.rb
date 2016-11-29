@@ -64,6 +64,9 @@ class Forms::ResponseDup
     options.shuffle.each do |option|
       field.options.create option.attributes.except!('id', 'field_id', 'created_at', 'updated_at')
     end
+    if field.field_type == 'dropdown' || field.field_type == 'inline_dropdown'
+      field.options.create(content: '', is_correct: false, order_index: -1)
+    end
   end
 
 end
