@@ -6,11 +6,11 @@ class V1::Forms::Response::SectionsController < ApplicationController
 		show_next_section = ::Forms::ResponseSectionChecker.can_visit_next_section?(response_section)
 		next_response_section = response_section.next_section
 		response = show_next_section ? next_response_section : {}
-		render json: response
+		render json: response, include: [sections: [fields: :options]]
 	end
 
 	def show
-		response_section = Forms::Response::Section.friendly.find(params[:id])
+		response_section = ::Forms::Response::Section.friendly.find(params[:id])
 		render json: response_section, include: [questions: [fields: :options]]
 	end
 
