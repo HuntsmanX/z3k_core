@@ -21,7 +21,7 @@ class Forms::CheckResponseSection
         user_score << self.send("check_#{field.field_type}", field)
       end
     end
-    response_section.show_next_regardless_of_score ? true : self.pass_section?(response_section, user_score)
+    response_section.show_next_regardless_of_score? ? true : self.pass_section?(response_section, user_score)
   end
 
   def self.pass_section?(response_section, user_score)
