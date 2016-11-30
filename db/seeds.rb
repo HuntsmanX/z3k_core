@@ -1,5 +1,13 @@
 require 'csv'
 
+#Cities
+City.find_or_create_by(name: 'Kharkiv', locale: 'RU', timezone: 'Europe/Kiev')
+City.find_or_create_by(name: 'Lviv', locale: 'RU', timezone: 'Europe/Kiev')
+City.find_or_create_by(name: 'Coimbatore', locale: 'EN', timezone: 'Asia/Kolkata')
+
+#User
+test_user = User.create!(email: 'test@gmail.com', password: '123456789qwerty', city_id: 1, first_name: 'Test', first_name_eng: 'Test', last_name: 'Testovich', last_name_eng: 'Testovich')
+
 example_test = Forms::Test.create(name: 'ExampleTest')
 
 example_section = example_test.sections.create(title: 'FirstSection', time_limit: 60,
@@ -54,7 +62,7 @@ fourth_example_question_field.options.create(content: "1", is_correct: true, ord
 fourth_example_question_field.options.create(content: "2", is_correct: false, order_index: 1)
 fourth_example_question_field.options.create(content: "3", is_correct: false, order_index: 2)
 
-example_response = Forms::Response.create(name: 'ExampleResponse', test_id: example_test.id)
+example_response = Forms::Response.create(name: 'ExampleResponse', test_id: example_test.id, user_id: test_user.id)
 example_response_section = example_response.sections.new(title: "Response Section", time_limit: 0, description: "Section description", required_score: 0, uuid: "Qdu-aApOCGA", score_units: nil, order_index: nil, acceptable_score: 0)
 example_response_section.save(validate: false)
 
@@ -69,13 +77,6 @@ first_response_section_question_field.options.create( content: "1", is_correct: 
 first_response_section_question_field.options.create( content: "2", is_correct: false, order_index: 1, user_selected: false)
 first_response_section_question_field.options.create( content: "3", is_correct: false, order_index: 2, user_selected: true)
 first_response_section_question_field.options.create( content: "4", is_correct: false, order_index: 3, user_selected: false)
-
-
-
-#Cities
-City.find_or_create_by(name: 'Kharkiv', locale: 'RU', timezone: 'Europe/Kiev')
-City.find_or_create_by(name: 'Lviv', locale: 'RU', timezone: 'Europe/Kiev')
-City.find_or_create_by(name: 'Coimbatore', locale: 'EN', timezone: 'Asia/Kolkata')
 
 #Transliterations
 CSV.parse(File.read('lib/import_data/transliterations.csv'), headers: true).each { |row| Transliteration.find_or_create_by(row.to_h) }

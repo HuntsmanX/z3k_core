@@ -1,4 +1,4 @@
-class Forms::ResponseDup
+class Forms::DuplicateTestForResponse
   attr_reader :response
 
   def initialize(testee, test_id)
@@ -21,13 +21,18 @@ class Forms::ResponseDup
   def duplicate_sections
     @test.sections.each do |section|
       response_section = response.sections.create(
-        title:            section.title,
-        time_limit:       section.time_limit,
-        bonus_time:       section.bonus_time,
-        description:      section.description,
-        order_index:      section.order_index,
-        required_score:   section.required_score,
-        acceptable_score: section.acceptable_score
+        title:                  section.title,
+        time_limit:             section.time_limit,
+        bonus_time:             section.bonus_time,
+        description:            section.description,
+        order_index:            section.order_index,
+        required_score:         section.required_score,
+        acceptable_score:       section.acceptable_score,
+        acceptable_score_units: section.acceptable_score_units,
+        required_score_units:   section.required_score_units,
+        show_next_section:      section.show_next_section,
+        questions_to_show:      section.questions_to_show,
+        shuffle_questions:      section.shuffle_questions
       )
 
       section_questions = get_section_questions(section)

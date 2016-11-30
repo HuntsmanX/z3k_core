@@ -3,7 +3,7 @@ class V1::Forms::Response::SectionsController < ApplicationController
 	def update
 		response_section = ::Forms::Response::Section.friendly.find(params[:id])
 		response_section.update section_params
-		show_next_section = ::Forms::ResponseSectionChecker.can_visit_next_section?(response_section)
+		show_next_section = ::Forms::CheckResponseSection.can_visit_next_section?(response_section)
 		next_response_section = response_section.next_section
 		response = show_next_section ? next_response_section : {}
 		render json: response
