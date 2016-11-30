@@ -6,7 +6,7 @@ module TestConcern
 	end
 
 	def first_section_uid
-		self.sections&.first&.uid
+		self.sections&.first&.uuid
 	end
 
 	def sections_count
