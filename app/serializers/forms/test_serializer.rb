@@ -1,9 +1,9 @@
 class Forms::TestSerializer < ApplicationSerializer
-  attributes :id, :name, :nums_of_sections, :total_questions, :max_score, :shuffle_questions, :time_limit
+  attributes :id, :name, :sections_count, :total_questions, :max_score, :shuffle_questions, :time_limit
 
   has_many :sections, if: :include_nested?
 
-  def nums_of_sections
+  def sections_count
     object.sections.size
   end
 
