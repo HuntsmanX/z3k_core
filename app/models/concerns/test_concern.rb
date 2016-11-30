@@ -5,7 +5,7 @@ module TestConcern
 		self.user.full_name
 	end
 
-	def first_section_uuid
+	def first_section_uid
 		self.sections&.first&.uuid
 	end
 
