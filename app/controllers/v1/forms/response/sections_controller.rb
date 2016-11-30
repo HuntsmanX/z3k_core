@@ -1,11 +1,7 @@
 class V1::Forms::Response::SectionsController < ApplicationController
 
-	def edit
-		respond_with Forms::Response::Section.includes({questions: [{fields: :options}]}).friendly.find(params[:id])
-	end
-
 	def update
-		response_section = ::Forms::Response::Section.friendly.find(params[:uuid])
+		response_section = ::Forms::Response::Section.friendly.find(params[:id])
 		response_section.update section_params
 		show_next_section = ::Forms::ResponseSectionChecker.can_visit_next_section?(response_section)
 		next_response_section = response_section.next_section
