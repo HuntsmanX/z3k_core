@@ -1,4 +1,5 @@
-module ConcernSerializer extend ActiveSupport::Concern
+module TestConcern
+	extend ActiveSupport::Concern
 
 	def user_full_name_eng
 		self.user.full_name
@@ -17,11 +18,15 @@ module ConcernSerializer extend ActiveSupport::Concern
 	end
 
 	def max_score
-		self.sections.map(&:questions).flatten.map(&:fields).flatten.map(&:score).inject(:+) || 0
+		get_fields.flatten.map(&:score).inject(:+) || 0
 	end
 
 	def user_score
-		self.sections.map(&:questions).flatten.map(&:fields).flatten.map(&:user_score).inject(:+) || 0
+		fields_array.flatten.map(&:user_score).inject(:+) || 0
+	end
+
+	def fields_array
+		self.sections.map(&:questions).flatten.map(&:fields)
 	end
 
 	def shuffle_questions
