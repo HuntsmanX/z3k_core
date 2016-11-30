@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161130101352) do
+ActiveRecord::Schema.define(version: 20161130153540) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,7 +63,6 @@ ActiveRecord::Schema.define(version: 20161130101352) do
     t.text     "description"
     t.integer  "required_score"
     t.string   "uuid"
-    t.integer  "score_units"
     t.integer  "order_index"
     t.integer  "acceptable_score"
     t.datetime "created_at",             null: false
