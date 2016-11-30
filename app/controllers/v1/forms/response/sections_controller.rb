@@ -7,12 +7,12 @@ class V1::Forms::Response::SectionsController < ApplicationController
 		next_response_section = response_section.next_section
 		response = show_next_section ? next_response_section : {}
 		response = {} if next_response_section.nil?
-		render json: response, include: [sections: [fields: :options]]
+		render json: response, include: [sections: [fields: :options]], testee: true
 	end
 
 	def show
 		response_section = ::Forms::Response::Section.friendly.find(params[:id])
-		render json: response_section, include: [questions: [fields: :options]]
+		render json: response_section, include: [questions: [fields: :options]], testee: true
 	end
 
 	def section_params
