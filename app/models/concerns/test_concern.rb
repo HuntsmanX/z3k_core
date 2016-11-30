@@ -18,7 +18,7 @@ module TestConcern
 	end
 
 	def max_score
-		get_fields.flatten.map(&:score).inject(:+) || 0
+		fields_array.flatten.map(&:score).inject(:+) || 0
 	end
 
 	def user_score
