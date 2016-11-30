@@ -1,10 +1,10 @@
-require './app/services/forms/response_dup'
+require './app/services/forms/duplicate_test_for_response'
 
-describe ResponseDup do
+describe DuplicateTestForResponse do
   let!(:user)       { FactoryGirl.create :user }
   let!(:full_test)  { FactoryGirl.create :full_test }
 
   it "creates a response via clone test" do
-    expect(ResponseDup.new(user, full_test.id).response).to be_valid
+    expect(DuplicateTestForResponse.new(user, full_test.id).response).to be_valid
   end
 end

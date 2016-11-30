@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161129160021) do
+ActiveRecord::Schema.define(version: 20161130101352) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,9 +66,14 @@ ActiveRecord::Schema.define(version: 20161129160021) do
     t.integer  "score_units"
     t.integer  "order_index"
     t.integer  "acceptable_score"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
     t.integer  "bonus_time"
+    t.integer  "acceptable_score_units"
+    t.integer  "required_score_units"
+    t.integer  "show_next_section"
+    t.integer  "questions_to_show"
+    t.boolean  "shuffle_questions"
     t.index ["response_id"], name: "index_forms_response_sections_on_response_id", using: :btree
   end
 
