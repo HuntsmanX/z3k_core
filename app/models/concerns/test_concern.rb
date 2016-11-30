@@ -5,8 +5,8 @@ module TestConcern
 		self.user.full_name
 	end
 
-	def first_section_uuid
-		self.sections&.first&.uuid
+	def first_section_uid
+		self.sections&.first&.uid
 	end
 
 	def sections_count
