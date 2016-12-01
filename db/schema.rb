@@ -63,7 +63,6 @@ ActiveRecord::Schema.define(version: 20161130162537) do
     t.text     "description"
     t.integer  "required_score"
     t.string   "uuid"
-    t.integer  "score_units"
     t.integer  "order_index"
     t.integer  "acceptable_score"
     t.datetime "created_at",             null: false

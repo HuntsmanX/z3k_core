@@ -6,6 +6,7 @@ class V1::Forms::Response::SectionsController < ApplicationController
 		show_next_section = ::Forms::CheckResponseSection.can_visit_next_section?(response_section)
 		next_response_section = response_section.next_section
 		response = show_next_section ? next_response_section : {}
+		response = {} if next_response_section.nil?
 		render json: response, include: [sections: [fields: :options]], testee: true
 	end
 

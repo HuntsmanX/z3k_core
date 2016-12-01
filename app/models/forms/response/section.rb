@@ -2,7 +2,10 @@ class Forms::Response::Section < ApplicationRecord
   extend FriendlyId
   friendly_id :uuid
 
-  enum score_units: [:points, :percent]
+  enum required_score_units:   [:points, :percent], _prefix: true
+  enum acceptable_score_units: [:points, :percent], _prefix: true
+  enum show_next_section:      [:show_next_depending_of_score, :show_next_regardless_of_score]
+
   default_scope -> { order(:order_index) }
 
   before_create :generate_uuid

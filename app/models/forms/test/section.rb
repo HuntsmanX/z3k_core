@@ -7,7 +7,7 @@ class Forms::Test::Section < ApplicationRecord
 
   enum required_score_units:   [:points, :percent], _prefix: true
   enum acceptable_score_units: [:points, :percent], _prefix: true
-  enum show_next_section:      [:always, :score]
+  enum show_next_section:      [:show_next_depending_of_score, :show_next_regardless_of_score]
 
   validates :title,             presence: true
   validates :time_limit,        numericality: true
