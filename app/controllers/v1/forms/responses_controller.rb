@@ -6,7 +6,7 @@ class V1::Forms::ResponsesController < ApplicationController
   end
 
   def show
-    response = ::Forms::Response.with_nested.references(:fields).find params[:id]
+    response = ::Forms::Response.with_nested.find params[:id]
     render json: response, include: [sections: [questions: [fields: :options]]]
   end
 
