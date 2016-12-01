@@ -1,6 +1,10 @@
 module TestConcern
 	extend ActiveSupport::Concern
 
+	included do
+		scope :with_nested, -> { includes(sections: [questions: [fields: :options]]) }
+	end
+
 	def user_full_name_eng
 		self.user.full_name
 	end
@@ -9,24 +13,8 @@ module TestConcern
 		self.sections&.first&.uuid
 	end
 
-	def sections_count
-		self.sections.size
-	end
-
 	def total_questions
 		self.sections.map { |s| s.questions.size }.inject(:+) || 0
-	end
-
-	def max_score
-		fields_array.flatten.map(&:score).inject(:+) || 0
-	end
-
-	def user_score
-		fields_array.flatten.map(&:user_score).inject(:+) || 0
-	end
-
-	def fields_array
-		self.sections.map(&:questions).flatten.map(&:fields)
 	end
 
 	def shuffle_questions

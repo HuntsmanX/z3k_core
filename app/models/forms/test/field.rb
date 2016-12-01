@@ -1,6 +1,12 @@
 class Forms::Test::Field < ApplicationRecord
   belongs_to :question, class_name: 'Forms::Test::Question', inverse_of: :fields
   has_many   :options,  class_name: 'Forms::Test::Option',   inverse_of: :field,  dependent: :destroy
+  has_one 	 :section, through: :question,  class_name: 'Forms::Test::Section'
+
+  delegate :test, to: :section, allow_nil: true
+
+  after_save :recalculate_scores
+  after_destroy :recalculate_scores
 
   enum field_type: [
     :text_input,
@@ -48,6 +54,11 @@ class Forms::Test::Field < ApplicationRecord
   end
 
   private
+
+  def recalculate_scores
+    max_score =  test&.fields&.sum('score')
+    test&.update_attributes(max_score: max_score) if max_score
+  end
 
   def has_content?
     text_input? || text_area? || inline_text_input?

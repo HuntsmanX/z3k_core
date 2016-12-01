@@ -1,12 +1,12 @@
 class V1::Forms::ResponsesController < ApplicationController
 
   def index
-    responses = ::Forms::Response.all.page(params[:page])
+    responses = ::Forms::Response.with_nested.includes(:user).all.page(params[:page])
     render json: responses, with_nested: false, meta: pagination_dict(responses)
   end
 
   def show
-    response = ::Forms::Response.find params[:id]
+    response = ::Forms::Response.with_nested.references(:fields).find params[:id]
     render json: response, include: [sections: [questions: [fields: :options]]]
   end
 
