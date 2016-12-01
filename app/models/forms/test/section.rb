@@ -1,6 +1,6 @@
 class Forms::Test::Section < ApplicationRecord
 
-  belongs_to :test,      class_name: "Forms::Test",           inverse_of: :sections
+  belongs_to :test,      class_name: 'Forms::Test',           inverse_of: :sections, counter_cache: true
   has_many   :questions, class_name: 'Forms::Test::Question', inverse_of: :section,  dependent: :destroy
 
   has_many   :fields, through: :questions, class_name: 'Forms::Test::Field'
@@ -20,6 +20,6 @@ class Forms::Test::Section < ApplicationRecord
 
   def max_required_score
     return unless required_score_units == 'percent' && required_score.to_i > 100
-    errors.add :required_score, "should be less than or equal to 100%"
+    errors.add :required_score, 'should be less than or equal to 100%'
   end
 end

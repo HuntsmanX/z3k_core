@@ -2,7 +2,7 @@ class V1::Forms::TestsController < ApplicationController
   respond_to :json
 
   def index
-    tests = ::Forms::Test.all.page(params[:page]).per(params[:per])
+    tests = ::Forms::Test.with_nested.all.page(params[:page]).per(params[:per])
     render json: tests, with_nested: false, meta: pagination_dict(tests)
   end
 
@@ -13,7 +13,7 @@ class V1::Forms::TestsController < ApplicationController
   end
 
   def show
-    test = ::Forms::Test.find params[:id]
+    test = ::Forms::Test.with_nested.find params[:id]
     render json: test, include: [sections: [questions: [fields: :options]]]
   end
 
