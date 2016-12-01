@@ -10,7 +10,7 @@ class Forms::Response::Section < ApplicationRecord
 
   before_create :generate_uuid
 
-  belongs_to :response, class_name: 'Forms::Response',           inverse_of: :sections
+  belongs_to :response, class_name: 'Forms::Response',            inverse_of: :sections, counter_cache: true
   has_many   :questions, class_name: 'Forms::Response::Question', inverse_of: :section, dependent: :destroy
   has_many   :fields, through: :questions, class_name: 'Forms::Response::Field'
   accepts_nested_attributes_for :questions, allow_destroy: true

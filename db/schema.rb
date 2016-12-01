@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161130153540) do
+ActiveRecord::Schema.define(version: 20161130162537) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,9 +79,12 @@ ActiveRecord::Schema.define(version: 20161130153540) do
   create_table "forms_responses", force: :cascade do |t|
     t.string   "name"
     t.integer  "test_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.integer  "user_id"
+    t.integer  "sections_count", default: 0
+    t.integer  "max_score",      default: 0
+    t.integer  "user_score",     default: 0
     t.index ["test_id"], name: "index_forms_responses_on_test_id", using: :btree
     t.index ["user_id"], name: "index_forms_responses_on_user_id", using: :btree
   end
@@ -138,8 +141,10 @@ ActiveRecord::Schema.define(version: 20161130153540) do
 
   create_table "forms_tests", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.integer  "sections_count", default: 0
+    t.integer  "max_score",      default: 0
   end
 
   create_table "transliterations", force: :cascade do |t|
