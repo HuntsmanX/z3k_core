@@ -1,10 +1,11 @@
 class User < ApplicationRecord
+  include DeviseTokenAuth::Concerns::User
   require 'z3k_transliterator.rb'
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, :confirmable
+  devise :database_authenticatable, :registerable, :confirmable,
+         :recoverable, :rememberable, :trackable, :validatable, :omniauthable
 
   has_many :responses, class_name: 'Forms::Response' #TODO: Add scope
   belongs_to :city
@@ -48,11 +49,17 @@ class User < ApplicationRecord
       params.merge!(auth_token: staff_credentials['api_key'])
       response = nil
 
-      RestClient.get(staff_credentials['url'] + '/api/auth', {params: params}) do |r|
+      RestClient.get('http://localhost:3000/' + 'api/auth', {params: {auth_token: staff_credentials['api_key'], email: params['email'], password: params['password']}}) do |r|
         response = (r.code == 200 ? JSON.parse(r.body) : nil)
       end
 
-      decorate_response(response) if response
+      unit_from_response(response,params) if response
+    end
+
+    def unit_from_response(response, params)
+      decorate_response(response)
+      response.merge!('password' => params['password'])
+      find_or_create_user(response)
     end
 
   end
@@ -87,6 +94,19 @@ class User < ApplicationRecord
 
   def self.decorate_response(user_from_staff)
     user_from_staff.keep_if { |k, v| (User.column_names - ['id']).index k }
+  end
+
+  def self.find_or_create_user(response)
+    user = User.find_or_initialize_by(email: response['email']) do |user|
+      user.password   = response['password']
+      user.city_id    = response['city_id']
+      user.timezone   = response['timezone']
+      user.created_at = response['created_at']
+      user.updated_at = response['updated_at']
+    end
+    user.skip_confirmation!
+    user.save!
+    user
   end
 
 end
