@@ -9,6 +9,8 @@ Rails.application.routes.draw do
     resources :users
 
     namespace :forms do
+      get 'tests/find_test' => 'tests#find_test'
+
       resource  :dashboard
 
       resources :tests
@@ -30,7 +32,6 @@ Rails.application.routes.draw do
       end
 
       get 'testees/find' => 'testees#find', constraints: {format: /(js|json)/}
-
     end
   end
 
