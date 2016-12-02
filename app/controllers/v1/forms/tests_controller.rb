@@ -1,8 +1,15 @@
 class V1::Forms::TestsController < ApplicationController
+  respond_to :json
 
   def index
     tests = ::Forms::Test.with_nested.all.page(params[:page]).per(params[:per])
     render json: tests, with_nested: false, meta: pagination_dict(tests)
+  end
+
+  def find_test
+    tests = ::Forms::Test.search_by_name(params[:q])
+    tests = ::Forms::Test.all unless tests.any?
+    render json: tests.as_json
   end
 
   def show

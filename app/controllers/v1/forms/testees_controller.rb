@@ -7,7 +7,7 @@ class V1::Forms::TesteesController < ApplicationController
 	end
 
 	def find
-		users = Forms::Testee.by_name(params[:q],'recruitment')['employees']
+		users = ::Forms::Testee.by_name(params[:q],'recruitment')['employees']
 		render json: users
 	end
 
