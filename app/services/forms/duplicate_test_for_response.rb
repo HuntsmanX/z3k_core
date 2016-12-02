@@ -3,7 +3,7 @@ class Forms::DuplicateTestForResponse
 
   def initialize(testee, test_id)
     @response = testee.responses.new
-    @test     = Forms::Test.find_by id: test_id
+    @test     = Forms::Test.with_nested.find_by id: test_id
 
     duplicate_test!
   end
