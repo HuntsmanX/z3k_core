@@ -29,6 +29,10 @@ Rails.application.routes.draw do
         resources :questions
       end
 
+      namespace :config do
+        resources :mistake_types
+      end
+
       get 'testees/find' => 'testees#find', constraints: {format: /(js|json)/}
 
     end

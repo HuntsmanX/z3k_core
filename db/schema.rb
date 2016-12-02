@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161130162537) do
+ActiveRecord::Schema.define(version: 20161202112816) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,6 +19,12 @@ ActiveRecord::Schema.define(version: 20161130162537) do
     t.string "name"
     t.string "locale"
     t.string "timezone"
+  end
+
+  create_table "forms_config_mistake_types", force: :cascade do |t|
+    t.string  "name"
+    t.string  "color"
+    t.integer "penalty"
   end
 
   create_table "forms_response_fields", force: :cascade do |t|
