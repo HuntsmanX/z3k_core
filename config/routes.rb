@@ -1,9 +1,8 @@
 Rails.application.routes.draw do
+  mount_devise_token_auth_for 'User', at: 'auth', controllers: { sessions: 'sessions' }
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
-  devise_for :users, controllers: { registrations: 'users/registrations' }, defaults: { format: :json }
-
-  post 'user_token' => 'user_token#create'
+  #devise_for :users, controllers: { registrations: 'users/registrations' }, defaults: { format: :json }
 
   namespace :v1 do
     resources :users

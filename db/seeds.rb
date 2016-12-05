@@ -15,7 +15,7 @@ example_section = example_test.sections.create(title: 'FirstSection', time_limit
                              required_score: 60, required_score_units: 'points',
                              order_index: 0, bonus_time: 0,shuffle_questions: true,
                              questions_to_show: 0, acceptable_score: 0, acceptable_score_units: "points",
-                             show_next_section: "always")
+                             show_next_section: :show_next_regardless_of_score)
 
 first_example_question = example_section.questions.new(content: "{'entityMap':{'0':{'type':'sequence','mutability':'IMMUTABLE','data':{}}},'blocks':[{'key':'8qdri','text':'Untitled question','type':'unstyled','depth':0,'inlineStyleRanges':[],'entityRanges':[],'data':{}},{'key':'8b3ej','text':' ','type':'atomic','depth':0,'inlineStyleRanges':[],'entityRanges':[{'offset':0,'length':1,'key':0}],'data':{}},{'key':'f3de1','text':'','type':'unstyled','depth':0,'inlineStyleRanges':[],'entityRanges':[],'data':{}}]}",
                                                        order_index: 0)
@@ -63,7 +63,7 @@ fourth_example_question_field.options.create(content: "2", is_correct: false, or
 fourth_example_question_field.options.create(content: "3", is_correct: false, order_index: 2)
 
 example_response = Forms::Response.create(name: 'ExampleResponse', test_id: example_test.id, user_id: test_user.id)
-example_response_section = example_response.sections.new(title: "Response Section", time_limit: 0, description: "Section description", required_score: 0, uuid: "Qdu-aApOCGA", score_units: nil, order_index: nil, acceptable_score: 0)
+example_response_section = example_response.sections.new(title: "Response Section", time_limit: 0, description: "Section description", required_score: 0, uuid: SecureRandom.urlsafe_base64 8, order_index: nil, acceptable_score: 0)
 example_response_section.save(validate: false)
 
 first_response_section_question = example_response_section.questions.new(content: "{'entityMap':{'0':{'type':'sequence','mutability':'IMMUTABLE','data':{}}},'blocks':[{'key':'8qdri','text':'Untitled question','type':'unstyled','depth':0,'inlineStyleRanges':[],'entityRanges':[],'data':{}},{'key':'8b3ej','text':'','type':'atomic','depth':0,'inlineStyleRanges':[],'entityRanges':[{'offset':0,'length':1,'key':0}],'data':{}},{'key':'f3de1','text':'','type':'unstyled','depth':0,'inlineStyleRanges':[],'entityRanges':[],'data':{}}]}",

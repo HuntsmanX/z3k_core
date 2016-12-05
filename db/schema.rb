@@ -180,6 +180,9 @@ ActiveRecord::Schema.define(version: 20161202112816) do
     t.jsonb    "names",                  default: {"last_name"=>"", "first_name"=>"", "last_name_eng"=>"", "first_name_eng"=>""}
     t.integer  "staff_id"
     t.integer  "recruitment_id"
+    t.string   "provider",               default: "email",                                                                        null: false
+    t.string   "uid",                    default: "",                                                                             null: false
+    t.json     "tokens"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
