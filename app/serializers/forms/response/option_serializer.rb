@@ -1,7 +1,5 @@
 class Forms::Response::OptionSerializer < ApplicationSerializer
-  attributes :field_id, :order_index, :user_selected, :id
-  attribute :content, unless: :testee?
-  attribute :is_correct, unless: :testee?
+  attributes :field_id, :order_index, :user_selected, :id, :content
 
-  belongs_to :field
+  attribute :is_correct, unless: :testee?
 end
