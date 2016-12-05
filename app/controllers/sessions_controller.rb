@@ -3,8 +3,8 @@ class SessionsController < DeviseTokenAuth::SessionsController
 		@resource = User.auth_on_staff(params)
 		if @resource
 
-			@client_id = SecureRandom.urlsafe_base64(nil, false)
-			@token     = SecureRandom.urlsafe_base64(nil, false)
+			@client_id = SecureRandom.urlsafe_base64
+			@token     = SecureRandom.urlsafe_base64
 
 			@resource.tokens[@client_id] = {
 					token: BCrypt::Password.create(@token),
