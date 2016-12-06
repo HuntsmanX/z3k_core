@@ -57,7 +57,6 @@ class User < ApplicationRecord
     end
 
     def unit_from_response(response, params)
-      decorate_response(response)
       response.merge!('password' => params['password'])
       find_or_create_user(response)
     end
@@ -92,17 +91,18 @@ class User < ApplicationRecord
     end
   end
 
-  def self.decorate_response(user_from_staff)
-    user_from_staff.keep_if { |k, v| (User.column_names - ['id']).index k }
-  end
-
   def self.find_or_create_user(response)
     user = User.find_or_initialize_by(email: response['email']) do |user|
-      user.password   = response['password']
-      user.city_id    = response['city_id']
-      user.timezone   = response['timezone']
-      user.created_at = response['created_at']
-      user.updated_at = response['updated_at']
+      user.password                = response['password']
+      user.city_id                 = response['city_id']
+      user.timezone                = response['timezone']
+      user.created_at              = response['created_at']
+      user.updated_at              = response['updated_at']
+      user.staff_id                = response['id']
+      user.names['last_name']      = response['profile']['last_name']
+      user.names['first_name']     = response['profile']['first_name']
+      user.names['last_name_eng']  = response['profile']['last_name_eng']
+      user.names['first_name_eng'] = response['profile']['first_name_eng']
     end
     user.skip_confirmation!
     user.save!
