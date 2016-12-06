@@ -1,6 +1,6 @@
 class SessionsController < DeviseTokenAuth::SessionsController
 	def create
-		@resource = User.auth_on_staff(params)
+		@resource = User.auth_on_staff(user_params)
 		if @resource
 
 			@client_id = SecureRandom.urlsafe_base64
@@ -18,5 +18,9 @@ class SessionsController < DeviseTokenAuth::SessionsController
 
 			render_create_success
 		end
+	end
+
+	def user_params
+		params.require(:user).permit(:email, :password)
 	end
 end
