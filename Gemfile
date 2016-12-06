@@ -21,6 +21,7 @@ gem 'puma', '~> 3.0'
 gem 'rack-cors'
 
 gem 'devise_token_auth'
+gem 'ransack'
 gem 'omniauth'
 gem 'friendly_id', '~> 5.1.0'
 
