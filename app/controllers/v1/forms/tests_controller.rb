@@ -2,7 +2,7 @@ class V1::Forms::TestsController < ApplicationController
   respond_to :json
 
   def index
-    tests = ::Forms::Test.with_nested.all.page(params[:page]).per(params[:per])
+    tests = ::Forms::Test.with_nested.search(params[:q]).result.page(params[:page]).per(params[:per])
     render json: tests, with_nested: false, meta: pagination_dict(tests)
   end
 
