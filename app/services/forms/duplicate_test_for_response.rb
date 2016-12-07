@@ -66,8 +66,13 @@ class Forms::DuplicateTestForResponse
   end
 
   def duplicate_options(field, options)
+
+    indexes = options.map(&:order_index)
+
     options.shuffle.each do |option|
-      field.options.create option.attributes.except!('id', 'field_id', 'created_at', 'updated_at')
+      attributes = option.attributes.except!('id', 'field_id', 'created_at', 'updated_at').with_indifferent_access
+      attributes.merge!(correct_order_index: attributes[:order_index], order_index: indexes.delete_at(rand(indexes.length))) if field.sequence?
+      field.options.create attributes
     end
 
     if field.dropdown? || field.inline_dropdown?
