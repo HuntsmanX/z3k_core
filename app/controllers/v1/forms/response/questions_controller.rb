@@ -18,6 +18,7 @@ class V1::Forms::Response::QuestionsController < ApplicationController
       fields_attributes: [
         :id,
         :user_score,
+        :user_content,
         :checked
       ]
     )

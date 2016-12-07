@@ -69,6 +69,15 @@ class Forms::DuplicateTestForResponse
     options.shuffle.each do |option|
       field.options.create option.attributes.except!('id', 'field_id', 'created_at', 'updated_at')
     end
+
+    if field.dropdown? || field.inline_dropdown?
+      field.options.create(
+        content:       'Please select',
+        is_correct:    false,
+        user_selected: true,
+        order_index:   -1
+      )
+    end
   end
 
 end
