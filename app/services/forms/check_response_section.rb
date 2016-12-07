@@ -17,7 +17,7 @@ class Forms::CheckResponseSection
   def self.check(response_section)
     user_score = []
     response_section.questions.each do |question|
-      question.fields.where(autocheck: true).each do |field|
+      question.fields.where(autocheck: true).where.not(field_type: ::Forms::Test::Field.field_types['text_editor']).each do |field|
         user_score << self.send("check_#{field.field_type}", field)
       end
     end
@@ -60,10 +60,6 @@ class Forms::CheckResponseSection
       field.update(checked: true)
       score
     end
-  end
-
-  def self.check_text_editor(field)
-
   end
 
 end
