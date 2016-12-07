@@ -1,5 +1,6 @@
 class V1::Forms::TestsController < ApplicationController
   respond_to :json
+  #before_action :authenticate_user!
 
   def index
     tests = ::Forms::Test.with_nested.search(params[:q]).result.page(params[:page]).per(params[:per])
