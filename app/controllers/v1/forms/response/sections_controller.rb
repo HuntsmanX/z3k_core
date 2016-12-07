@@ -1,5 +1,6 @@
 class V1::Forms::Response::SectionsController < ApplicationController
 
+#TODO: N+1 in finder
 	def update
 		section = ::Forms::Response::Section.friendly.find(params[:id])
 		section.update_attributes section_params

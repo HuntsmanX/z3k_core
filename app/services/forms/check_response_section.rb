@@ -62,4 +62,8 @@ class Forms::CheckResponseSection
     end
   end
 
+  def self.check_text_editor(field)
+
+  end
+
 end
