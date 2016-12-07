@@ -49,7 +49,7 @@ class User < ApplicationRecord
       params.merge!(auth_token: staff_credentials['api_key'])
       response = nil
 
-      RestClient.get('http://localhost:3001/' + 'api/auth', {params: {auth_token: staff_credentials['api_key'], email: params['email'], password: params['password']}}) do |r|
+      RestClient.get(staff_credentials['url'] + 'api/auth', {params: {auth_token: staff_credentials['api_key'], email: params['email'], password: params['password']}}) do |r|
         response = (r.code == 200 ? JSON.parse(r.body) : nil)
       end
 
