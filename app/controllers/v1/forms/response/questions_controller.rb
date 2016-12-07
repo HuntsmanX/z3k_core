@@ -14,14 +14,13 @@ class V1::Forms::Response::QuestionsController < ApplicationController
 
   def question_params
     parameters = params.require(:question).permit(
-        :section_id,
-        fields_attributes: [
-            :id,
-            :user_score
-        ]
+      :section_id,
+      fields_attributes: [
+        :id,
+        :user_score,
+        :user_content,
+        :checked
+      ]
     )
-
-    parameters[:fields_attributes].each {|fa| fa.merge!(checked: true)}
-    parameters
   end
 end

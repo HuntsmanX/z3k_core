@@ -14,7 +14,7 @@ class Forms::CheckResponseSection
     :check_inline_text_input
   ]
 
-  def self.can_visit_next_section?(response_section)
+  def self.check(response_section)
     user_score = []
     response_section.questions.each do |question|
       question.fields.where(autocheck: true).each do |field|

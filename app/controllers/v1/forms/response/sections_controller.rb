@@ -1,18 +1,18 @@
 class V1::Forms::Response::SectionsController < ApplicationController
 
 	def update
-		response_section = ::Forms::Response::Section.includes(questions: [fields: :options]).friendly.find(params[:id])
-		response_section.update section_params
-		show_next_section = ::Forms::CheckResponseSection.can_visit_next_section?(response_section)
-		next_response_section = response_section.next_section
-		response = show_next_section ? next_response_section : {}
-		response = {} if next_response_section.nil?
-		render json: response, include: [sections: [fields: :options]], testee: true
+		section = ::Forms::Response::Section.friendly.find(params[:id])
+		section.update_attributes section_params
+
+		successful = ::Forms::CheckResponseSection.check(section)
+		next_section = successful ? section.next_section : nil
+
+		render json: section, with_nested: false, meta: { next_uid: next_section.try(:uuid) }
 	end
 
 	def show
-		response_section = ::Forms::Response::Section.includes(questions: [fields: :options]).friendly.find(params[:id])
-		render json: response_section, include: [questions: [fields: :options]], testee: true
+		section = ::Forms::Response::Section.includes(questions: [fields: :options]).friendly.find(params[:id])
+		render json: section, include: [questions: [fields: :options]], testee: true
 	end
 
 	def section_params
@@ -37,7 +37,8 @@ class V1::Forms::Response::SectionsController < ApplicationController
             :content,
             :user_selected,
             :is_correct,
-            :order_index
+            :order_index,
+            :_destroy
           ]
         ]
       ]
