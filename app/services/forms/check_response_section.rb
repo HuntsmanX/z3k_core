@@ -38,14 +38,21 @@ class Forms::CheckResponseSection
 
   methods_names_for_select.each do |method_name|
     Forms::CheckResponseSection.define_singleton_method(method_name) do |field|
-       if field.options.where(is_correct: true).pluck(:user_selected).uniq.all? {|correct| correct.present?}
-         field.update(user_score: field.score)
-         score = field.score
-       else
-        score = 0
-       end
-       field.update(checked: true)
-       score
+      is_correct = if field.sequence?
+                     field.options.all? { |opt| opt.order_index == opt.correct_order_index }
+                   else
+                     field.options.where(is_correct: true).pluck(:user_selected).uniq.all? { |correct| correct.present? }
+                   end
+
+      if is_correct
+        field.update(user_score: field.score)
+        score = field.score
+      else
+        score = 0 
+      end
+
+      field.update(checked: true)
+      score
     end
   end
 
