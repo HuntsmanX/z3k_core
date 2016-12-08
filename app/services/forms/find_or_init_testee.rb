@@ -4,8 +4,7 @@ class Forms::FindOrInitTestee
     @params = params
   end
 
-  def testee
-    source_type ||= "recruitment"
+  def testee(source_type = "recruitment")
     self.send "get_#{source_type}"
   end
 
