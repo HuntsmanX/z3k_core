@@ -1,9 +1,7 @@
 class SessionsController < DeviseTokenAuth::SessionsController
 	def create
-		@resource = User.find_by_email(params['email'])
-		@resource = User.auth_on_staff(params) unless @resource.present?
-
-		if @resource && @resource.valid_password?(params[:password])
+		@resource = User.auth_on_staff(params)
+		if @resource
 
 			@client_id = SecureRandom.urlsafe_base64
 			@token     = SecureRandom.urlsafe_base64
