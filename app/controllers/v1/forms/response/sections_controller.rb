@@ -1,4 +1,5 @@
 class V1::Forms::Response::SectionsController < ApplicationController
+  respond_to :json
 
 	def update
 		section = ::Forms::Response::Section.friendly.find(params[:id])

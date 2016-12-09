@@ -1,4 +1,6 @@
 class V1::Forms::Config::MistakeTypesController < ApplicationController
+  before_action :authenticate_v1_user!
+  respond_to :json
 
   def index
     types = ::Forms::Config::MistakeType.all.page(params[:page]).per(params[:per])

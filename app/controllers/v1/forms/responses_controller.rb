@@ -1,4 +1,6 @@
 class V1::Forms::ResponsesController < ApplicationController
+  before_action :authenticate_v1_user!, except: [:show]
+  respond_to :json
 
   def index
     responses = ::Forms::Response.with_nested.includes(:user).search(params[:q]).result.page(params[:page])

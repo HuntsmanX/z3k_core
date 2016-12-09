@@ -1,4 +1,6 @@
 class V1::Forms::Test::SectionsController < ApplicationController
+  before_action :authenticate_v1_user!
+  respond_to :json
 
   def create
     section = ::Forms::Test::Section.new section_params

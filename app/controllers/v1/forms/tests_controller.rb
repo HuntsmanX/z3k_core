@@ -1,4 +1,5 @@
 class V1::Forms::TestsController < ApplicationController
+  before_action :authenticate_v1_user!
   respond_to :json
 
   def index
