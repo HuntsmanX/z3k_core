@@ -1,4 +1,6 @@
 class V1::Forms::Test::QuestionsController < ApplicationController
+  before_action :authenticate_v1_user!
+  respond_to :json
 
   def create
     question = ::Forms::Test::Question.new question_params

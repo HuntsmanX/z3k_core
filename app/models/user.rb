@@ -46,7 +46,7 @@ class User < ApplicationRecord
 
     def auth_on_staff(params)
       staff_credentials = Rails.application.secrets.staff
-      params.merge!(auth_token: staff_credentials['api_key'])
+      params[:auth_token] = staff_credentials['api_key']
       response = nil
 
       RestClient.get(staff_credentials['url'] + 'api/auth', {params: {auth_token: staff_credentials['api_key'], email: params['email'], password: params['password']}}) do |r|

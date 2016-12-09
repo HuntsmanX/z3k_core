@@ -1,4 +1,6 @@
 class V1::Forms::Response::QuestionsController < ApplicationController
+  before_action :authenticate_v1_user!
+  respond_to :json
 
   def update
     question = ::Forms::Response::Question.find params[:id]

@@ -1,4 +1,5 @@
 class V1::Forms::Response::SectionsController < ApplicationController
+  respond_to :json
 
 #TODO: N+1 in finder
 	def update
