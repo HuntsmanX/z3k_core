@@ -3,6 +3,8 @@ class Forms::Test::Field < ApplicationRecord
   has_many   :options,  class_name: 'Forms::Test::Option',   inverse_of: :field,  dependent: :destroy
   has_one 	 :section, through: :question,  class_name: 'Forms::Test::Section'
 
+  scope :autocheck, -> {where(autocheck: true)}
+
   delegate :test, to: :section, allow_nil: true
 
   after_save :recalculate_scores

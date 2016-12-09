@@ -4,7 +4,7 @@ class V1::Forms::TestsController < ApplicationController
 
   def index
     tests = ::Forms::Test.with_nested.search(params[:q]).result.page(params[:page]).per(params[:per])
-    render json: tests, with_nested: false, meta: pagination_dict(tests)
+    render json: tests, with_nested: true, meta: pagination_dict(tests)
   end
 
   def find_test
