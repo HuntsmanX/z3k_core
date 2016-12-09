@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161205121523) do
+ActiveRecord::Schema.define(version: 20161207150844) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,8 +48,9 @@ ActiveRecord::Schema.define(version: 20161205121523) do
     t.integer  "field_id"
     t.integer  "order_index"
     t.boolean  "user_selected"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.integer  "correct_order_index"
     t.index ["field_id"], name: "index_forms_response_options_on_field_id", using: :btree
   end
 

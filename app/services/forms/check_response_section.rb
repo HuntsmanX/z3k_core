@@ -14,10 +14,27 @@ class Forms::CheckResponseSection
     :check_inline_text_input
   ]
 
+  def self.field_score(field)
+    avg = option_average_score(field)
+    score = 0
+
+    if field.sequence?
+      field.options.each { |opt| score += avg if opt.order_index == opt.correct_order_index }
+    else
+      field.options.where(is_correct: true).pluck(:user_selected).uniq.each { |correct| score += avg if correct.present? }
+    end
+
+    score
+  end
+
+  def self.option_average_score(field)
+    field.score / field.options.count
+  end
+
   def self.check(response_section)
     user_score = []
     response_section.questions.each do |question|
-      question.fields.where(autocheck: true).each do |field|
+      question.fields.where(autocheck: true).where.not(field_type: ::Forms::Test::Field.field_types['text_editor']).each do |field|
         user_score << self.send("check_#{field.field_type}", field)
       end
     end
@@ -38,14 +55,9 @@ class Forms::CheckResponseSection
 
   methods_names_for_select.each do |method_name|
     Forms::CheckResponseSection.define_singleton_method(method_name) do |field|
-       if field.options.where(is_correct: true).pluck(:user_selected).uniq.all? {|correct| correct.present?}
-         field.update(user_score: field.score)
-         score = field.score
-       else
-        score = 0
-       end
-       field.update(checked: true)
-       score
+      score = field_score(field)
+      field.update(score: score, checked: true)
+      score
     end
   end
 
