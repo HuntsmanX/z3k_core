@@ -94,7 +94,7 @@ class User < ApplicationRecord
 
     end
   end
-
+  
   def self.find_or_create_user(response)
     user = User.find_or_initialize_by(email: response['email']) do |user|
       user.password                = response['password']
