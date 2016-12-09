@@ -6,5 +6,6 @@ class Forms::Response < ApplicationRecord
   has_many :questions, through: :sections, class_name: 'Forms::Response::Question'
   belongs_to :user
 
-  validates :name, presence: true
+  validates :name,    presence: true
+  validates :user_id, presence: true
 end

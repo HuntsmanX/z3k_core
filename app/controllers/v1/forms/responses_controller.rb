@@ -11,13 +11,12 @@ class V1::Forms::ResponsesController < ApplicationController
   end
 
   def create
-    testee = ::Forms::FindOrInitTestee.new(response_params[:user_id]).testee
-    if testee.save
-      response = ::Forms::DuplicateTestForResponse.new(testee, response_params[:test_id]).response
-      render json: response
-    else
-      render json: testee, status: 422, adapter: :json_api, serializer: ActiveModel::Serializer::ErrorSerializer and return
-    end
+    form = CreateResponse.new(response_params[:user_id], response_params[:test_id])
+     if form.response
+       render json: form.response
+     else
+       render json: form.errors.messages, status: 422
+     end
   end
 
   private
