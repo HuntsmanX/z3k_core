@@ -14,7 +14,7 @@ class Forms::Response::SectionSerializer < ApplicationSerializer
   end
 
   def is_passed
-    user_scores >= object.required_score ? 'Yes' : 'No'
+    user_score >= object.required_score ? 'Yes' : 'No'
   end
 
 end
