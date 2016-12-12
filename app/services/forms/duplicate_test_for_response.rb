@@ -28,8 +28,8 @@ class Forms::DuplicateTestForResponse
         order_index:            section.order_index,
         required_score:         section.required_score,
         acceptable_score:       section.acceptable_score,
-        acceptable_score_units: section.acceptable_score_units,
-        required_score_units:   section.required_score_units,
+        acceptable_score_unit:  section.acceptable_score_unit,
+        required_score_unit:    section.required_score_unit,
         show_next_section:      section.show_next_section,
         questions_to_show:      section.questions_to_show,
         shuffle_questions:      section.shuffle_questions

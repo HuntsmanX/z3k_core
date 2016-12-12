@@ -12,9 +12,9 @@ example_test = Forms::Test.create(name: 'ExampleTest')
 
 example_section = example_test.sections.create(title: 'FirstSection', time_limit: 60,
                                                description: 'Description for example test',
-                                               required_score: 60, required_score_units: 'points',
+                                               required_score: 60, required_score_unit: 'points',
                                                order_index: 0, bonus_time: 0,shuffle_questions: true,
-                                               questions_to_show: 0, acceptable_score: 0, acceptable_score_units: "points",
+                                               questions_to_show: 0, acceptable_score: 0, acceptable_score_unit: 'points',
                                                show_next_section: :show_next_regardless_of_score)
 
 first_example_question = example_section.questions.new(content: "{'entityMap':{'0':{'type':'sequence','mutability':'IMMUTABLE','data':{}}},'blocks':[{'key':'8qdri','text':'Untitled question','type':'unstyled','depth':0,'inlineStyleRanges':[],'entityRanges':[],'data':{}},{'key':'8b3ej','text':' ','type':'atomic','depth':0,'inlineStyleRanges':[],'entityRanges':[{'offset':0,'length':1,'key':0}],'data':{}},{'key':'f3de1','text':'','type':'unstyled','depth':0,'inlineStyleRanges':[],'entityRanges':[],'data':{}}]}",

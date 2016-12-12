@@ -44,7 +44,7 @@ class Forms::CheckResponseSection
   def self.pass_section?(response_section, user_score)
     max_response_section = response_section.questions.map(&:fields).flatten.map(&:score).inject(:+) || 0
     scores = user_score.grep(Integer).reduce(:+) || -1
-    if response_section.required_score_units == 'percent'
+    if response_section.required_score_unit_percent?
       available_score = max_response_section * (response_section.required_score / 100.0)
       scores = user_score.grep(Integer).reduce(:+) || -1
       scores >= available_score
