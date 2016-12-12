@@ -18,7 +18,9 @@ class Forms::CheckResponseSection
     avg = option_average_score(field)
     score = 0
     if field.dropdown? || field.radio_buttons?
-      field.options.where(is_correct: true).pluck(:user_selected).uniq.each { |correct| score += field.score if correct.present? }
+      field.options.where(is_correct: true).pluck(:user_selected).uniq.each do |correct|
+        score += field.score if correct.present?
+      end
     elsif field.checkboxes?
       score = scores_for_checkboxes(field)
     elsif field.sequence?
