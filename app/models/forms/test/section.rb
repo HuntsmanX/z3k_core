@@ -5,8 +5,8 @@ class Forms::Test::Section < ApplicationRecord
 
   has_many   :fields, through: :questions, class_name: 'Forms::Test::Field'
 
-  enum required_score_units:   [:points, :percent], _prefix: true
-  enum acceptable_score_units: [:points, :percent], _prefix: true
+  enum required_score_unit:   [:points, :percent], _prefix: true
+  enum acceptable_score_unit: [:points, :percent], _prefix: true
   enum show_next_section:      [:show_next_depending_on_score, :show_next_regardless_of_score]
 
   validates :title,             presence: true
@@ -19,7 +19,7 @@ class Forms::Test::Section < ApplicationRecord
   validate  :max_required_score
 
   def max_required_score
-    return unless required_score_units == 'percent' && required_score.to_i > 100
+    return unless required_score_unit_percent? && required_score.to_i > 100
     errors.add :required_score, 'should be less than or equal to 100%'
   end
 end

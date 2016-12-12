@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161207150844) do
+ActiveRecord::Schema.define(version: 20161209100144) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,11 +72,11 @@ ActiveRecord::Schema.define(version: 20161207150844) do
     t.string   "uuid"
     t.integer  "order_index"
     t.integer  "acceptable_score"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
     t.integer  "bonus_time"
-    t.integer  "acceptable_score_units"
-    t.integer  "required_score_units"
+    t.integer  "acceptable_score_unit"
+    t.integer  "required_score_unit"
     t.integer  "show_next_section"
     t.integer  "questions_to_show"
     t.boolean  "shuffle_questions"
@@ -134,15 +134,15 @@ ActiveRecord::Schema.define(version: 20161207150844) do
     t.integer  "time_limit"
     t.integer  "bonus_time"
     t.integer  "required_score"
-    t.integer  "required_score_units"
+    t.integer  "required_score_unit"
     t.integer  "acceptable_score"
-    t.integer  "acceptable_score_units"
+    t.integer  "acceptable_score_unit"
     t.integer  "order_index"
     t.boolean  "shuffle_questions"
     t.integer  "questions_to_show"
     t.integer  "show_next_section"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
     t.index ["test_id"], name: "index_forms_test_sections_on_test_id", using: :btree
   end
 
