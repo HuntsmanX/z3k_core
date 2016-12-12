@@ -17,14 +17,24 @@ class Forms::CheckResponseSection
   def self.field_score(field)
     avg = option_average_score(field)
     score = 0
-
-    if field.sequence?
+    if field.dropdown? || field.radio_buttons?
+      field.options.where(is_correct: true).pluck(:user_selected).uniq.each { |correct| score += field.score if correct.present? }
+    elsif field.checkboxes?
+      score = scores_for_checkboxes(field)
+    elsif field.sequence?
       field.options.each { |opt| score += avg if opt.order_index == opt.correct_order_index }
+    end
+    score
+  end
+
+  def self.scores_for_checkboxes(field, avg = option_average_score(field) )
+    score = 0
+    if field.options.where(is_correct: true).length == field.options.where(user_selected: true).length
+      field.score
     else
       field.options.where(is_correct: true).pluck(:user_selected).uniq.each { |correct| score += avg if correct.present? }
+      score
     end
-
-    score
   end
 
   def self.option_average_score(field)
@@ -56,7 +66,7 @@ class Forms::CheckResponseSection
   methods_names_for_select.each do |method_name|
     Forms::CheckResponseSection.define_singleton_method(method_name) do |field|
       score = field_score(field)
-      field.update(score: score, checked: true)
+      field.update(user_score: score, checked: true)
       score
     end
   end
