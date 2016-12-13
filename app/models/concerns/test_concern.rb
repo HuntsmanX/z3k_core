@@ -39,7 +39,7 @@ module TestConcern
 		total_str
 	end
 
-	def nums_of_sections
+	def sections_count
 		self.sections.size
 	end
 end
