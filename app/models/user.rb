@@ -107,6 +107,7 @@ class User < ApplicationRecord
       user.names['first_name']     = response['profile']['first_name']
       user.names['last_name_eng']  = response['profile']['last_name_eng']
       user.names['first_name_eng'] = response['profile']['first_name_eng']
+      user.avatar_url              = response['get_avatar_url']
     end
     user.skip_confirmation!
     user.save!
