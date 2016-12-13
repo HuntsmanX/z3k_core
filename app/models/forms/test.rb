@@ -10,4 +10,19 @@ class Forms::Test < ApplicationRecord
   def self.search_by_name(pattern)
     where('name ILIKE ?', "%#{pattern}%")
   end
+
+  def alerts
+    alerts = []
+
+    if sections.blank?
+      alerts << 'This test has no sections'
+    end
+
+    if sections.any? { |s| s.alerts.present? }
+      alerts << 'This test has sections with warnings'
+    end
+
+    alerts
+  end
+
 end
