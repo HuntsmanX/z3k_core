@@ -38,4 +38,8 @@ module TestConcern
 
 		total_str
 	end
+
+	def sections_count
+		self.sections.size
+	end
 end
