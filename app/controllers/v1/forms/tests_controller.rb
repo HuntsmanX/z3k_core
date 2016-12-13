@@ -3,14 +3,14 @@ class V1::Forms::TestsController < ApplicationController
   respond_to :json
 
   def index
-    tests = ::Forms::Test.with_nested.search(params[:q]).result.page(params[:page]).per(params[:per])
-    render json: tests, with_nested: true, meta: pagination_dict(tests)
+    tests = ::Forms::Test.with_nested.order(created_at: :desc).search(params[:q]).result.page(params[:page]).per(params[:per])
+    render json: tests, with_nested: false, meta: pagination_dict(tests)
   end
 
   def find_test
     tests = ::Forms::Test.search_by_name(params[:q])
     tests = ::Forms::Test.all unless tests.any?
-    render json: tests.as_json
+    render json: tests.as_json(methods: :alerts)
   end
 
   def show

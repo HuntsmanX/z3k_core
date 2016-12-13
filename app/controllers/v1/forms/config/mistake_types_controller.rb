@@ -3,7 +3,7 @@ class V1::Forms::Config::MistakeTypesController < ApplicationController
   respond_to :json
 
   def index
-    types = ::Forms::Config::MistakeType.all.page(params[:page]).per(params[:per])
+    types = ::Forms::Config::MistakeType.order(name: :asc).page(params[:page]).per(params[:per])
     render json: types, meta: pagination_dict(types)
   end
 

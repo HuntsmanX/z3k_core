@@ -64,7 +64,11 @@ class User < ApplicationRecord
   end
 
   ransacker :first_name_eng do |parent|
-    Arel::Nodes::InfixOperation.new('->>', parent.table[:names], Arel::Nodes.build_quoted('first_name_eng'))
+    Arel::Nodes::InfixOperation.new '->>', parent.table[:names], Arel::Nodes.build_quoted('first_name_eng')
+  end
+
+  ransacker :last_name_eng do |parent|
+    Arel::Nodes::InfixOperation.new '->>', parent.table[:names], Arel::Nodes.build_quoted('last_name_eng')
   end
 
   def full_name

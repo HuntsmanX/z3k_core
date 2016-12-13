@@ -22,4 +22,23 @@ class Forms::Test::Section < ApplicationRecord
     return unless required_score_unit_percent? && required_score.to_i > 100
     errors.add :required_score, 'should be less than or equal to 100%'
   end
+
+  def alerts
+    alerts = []
+
+    if questions.count.zero?
+      alerts << 'This section has no questions'
+    end
+
+    if required_score > fields.sum(:score) && required_score_unit_points?
+      alerts << 'Required score is larger than max score'
+    end
+
+    if acceptable_score > fields.autocheck.sum(:score) && acceptable_score_unit_points?
+      alerts << 'Acceptable autoscore is larger than max autoscore'
+    end
+
+    alerts
+  end
+  
 end
