@@ -78,7 +78,11 @@ class User < ApplicationRecord
   end
 
   ransacker :first_name_eng do |parent|
-    Arel::Nodes::InfixOperation.new('->>', parent.table[:names], Arel::Nodes.build_quoted('first_name_eng'))
+    Arel::Nodes::InfixOperation.new '->>', parent.table[:names], Arel::Nodes.build_quoted('first_name_eng')
+  end
+
+  ransacker :last_name_eng do |parent|
+    Arel::Nodes::InfixOperation.new '->>', parent.table[:names], Arel::Nodes.build_quoted('last_name_eng')
   end
 
   def full_name
@@ -133,6 +137,7 @@ class User < ApplicationRecord
       user.names['first_name']     = response['profile']['first_name']
       user.names['last_name_eng']  = response['profile']['last_name_eng']
       user.names['first_name_eng'] = response['profile']['first_name_eng']
+      user.avatar_url              = response['get_avatar_url']
     end
     user.skip_confirmation!
     user.save!
