@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     resources :users do
       collection { get :find }
     end
-    mount_devise_token_auth_for 'User', at: 'auth', controllers: { sessions: 'sessions' }
+    mount_devise_token_auth_for 'User', at: 'auth', controllers: { sessions: 'sessions' }, skip: [:omniauth_callbacks]
 
     namespace :forms do
       get 'tests/find_test' => 'tests#find_test'
