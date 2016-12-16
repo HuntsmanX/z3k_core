@@ -3,7 +3,7 @@ class V1::Forms::ResponsesController < ApplicationController
   respond_to :json
 
   def index
-    responses = ::Forms::Response.with_nested.order(created_at: :desc).includes(:user).search(params[:q]).result.page(params[:page])
+    responses = ::Forms::Response.with_nested.includes(:user).search(params[:q]).result.page(params[:page])
     render json: responses, with_nested: false, meta: pagination_dict(responses)
   end
 
@@ -13,9 +13,9 @@ class V1::Forms::ResponsesController < ApplicationController
   end
 
   def create
-    form = CreateResponse.new(response_params[:user_id], response_params[:test_id])
-     if form.response
-       render json: form.response
+    form = ::Forms::CreateResponseForm.new
+     if form.submit(response_params)
+       render json: form.model
      else
        render json: form.errors.messages, status: 422
      end

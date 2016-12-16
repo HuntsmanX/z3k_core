@@ -1,6 +1,7 @@
 class Forms::Response < ApplicationRecord
   include TestConcern
   self.table_name = "forms_responses"
+  
   has_many :sections, class_name: 'Forms::Response::Section', inverse_of: :response, dependent: :destroy
   has_many :fields,    through: :sections, class_name: 'Forms::Response::Field'
   has_many :questions, through: :sections, class_name: 'Forms::Response::Question'

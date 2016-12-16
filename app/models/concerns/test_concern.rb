@@ -5,14 +5,6 @@ module TestConcern
 		scope :with_nested, -> { includes(sections: [questions: [fields: :options]]) }
 	end
 
-	def user_full_name_eng
-		self.user.full_name
-	end
-
-	def first_section_uid
-		self.sections&.first&.uuid
-	end
-
 	def total_questions
 		self.sections.map { |s| s.questions.size }.inject(:+) || 0
 	end
