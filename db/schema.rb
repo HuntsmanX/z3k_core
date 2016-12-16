@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161209100144) do
+ActiveRecord::Schema.define(version: 20161213094030) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -154,6 +154,31 @@ ActiveRecord::Schema.define(version: 20161209100144) do
     t.integer  "max_score",      default: 0
   end
 
+  create_table "permissions", force: :cascade do |t|
+    t.integer  "role_id"
+    t.string   "key"
+    t.boolean  "allowed"
+    t.jsonb    "conditions"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["role_id"], name: "index_permissions_on_role_id", using: :btree
+  end
+
+  create_table "role_assignments", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "role_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["role_id"], name: "index_role_assignments_on_role_id", using: :btree
+    t.index ["user_id"], name: "index_role_assignments_on_user_id", using: :btree
+  end
+
+  create_table "roles", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "transliterations", force: :cascade do |t|
     t.string "russian"
     t.string "english"
@@ -190,4 +215,7 @@ ActiveRecord::Schema.define(version: 20161209100144) do
   end
 
   add_foreign_key "forms_responses", "users"
+  add_foreign_key "permissions", "roles"
+  add_foreign_key "role_assignments", "roles"
+  add_foreign_key "role_assignments", "users"
 end

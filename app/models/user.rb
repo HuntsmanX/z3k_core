@@ -8,6 +8,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable
 
   has_many :responses, class_name: 'Forms::Response' #TODO: Add scope
+  has_many :role_assignments
+  has_many :roles, through: :role_assignments
   belongs_to :city
 
 
@@ -63,12 +65,36 @@ class User < ApplicationRecord
 
   end
 
+  def permissions
+    roles.eager_load(:permissions).map(&:permissions).flatten
+  end
+
+  def permissions_combined
+    permissions.map(&:combined)
+  end
+
+  def role?(role)
+    roles.any? { |r| r.name.underscore.to_sym == role }
+  end
+
   ransacker :first_name_eng do |parent|
     Arel::Nodes::InfixOperation.new('->>', parent.table[:names], Arel::Nodes.build_quoted('first_name_eng'))
   end
 
   def full_name
-    self.first_name_eng.to_s + " " + self.last_name_eng.to_s
+    self.first_name_eng.to_s + ' ' + self.last_name_eng.to_s
+  end
+
+  def self.search(search)
+    searchable = %w(first_name last_name first_name_eng last_name_eng)
+    condition = ->(attr) { "(names ->> '#{attr}')" }
+    query = searchable.map{|a| condition.call(a)}.join(' || ')
+
+    if search
+      where("#{query} ILIKE ?", "%#{search}%")
+    else
+      all
+    end
   end
 
   private
