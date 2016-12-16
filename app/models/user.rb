@@ -20,18 +20,6 @@ class User < ApplicationRecord
     last_name:      :string,
     last_name_eng:  :string
 
-  def permissions
-    roles.eager_load(:permissions).map(&:permissions).flatten
-  end
-
-  def permissions_combined
-    permissions.map(&:combined)
-  end
-
-  def role?(role)
-    roles.any? { |r| r.name.underscore.to_sym == role }
-  end
-
   ransacker :first_name_eng do |parent|
     Arel::Nodes::InfixOperation.new '->>', parent.table[:names], Arel::Nodes.build_quoted('first_name_eng')
   end
@@ -42,6 +30,18 @@ class User < ApplicationRecord
 
   def full_name_eng
     "#{first_name_eng} #{last_name_eng}"
+  end
+
+  def permissions
+    roles.eager_load(:permissions).map(&:permissions).flatten
+  end
+
+  def permissions_combined
+    permissions.map(&:combined)
+  end
+
+  def role?(role)
+    roles.any? { |r| r.name.underscore.to_sym == role }
   end
 
   def self.search(search)
