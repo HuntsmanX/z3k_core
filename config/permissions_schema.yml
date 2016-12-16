@@ -1,0 +1,73 @@
+tests_index:
+  label: 'Access Tests'
+  resource: 'test'
+  action: 'index'
+  allowed: true
+  elements:
+    - select:
+      - conditions_tests
+      - ['all', 'own']
+      - label: tests
+        include_blank: true
+  conditions:
+    conditions_tests: 'all'
+
+tests_create:
+  label: 'Create Tests'
+  resource: 'test'
+  action: 'create'
+  allowed: true
+  element:
+    name: 'name'
+    label: 'Name'
+    rules: ''
+  conditions:
+    conditions_tests: 'all'
+
+tests_edit:
+  label: 'Edit Tests'
+  resource: 'test'
+  action: 'edit'
+  allowed: true
+  elements:
+    - select:
+      - conditions_tests
+      - ['all', 'own']
+      - label: tests
+        include_blank: true
+  conditions:
+    conditions_tests: 'all'
+
+tests_delete:
+  label: 'Delete Tests'
+  resource: 'test'
+  action: 'delete'
+  allowed: true
+  elements:
+    - select:
+      - conditions_tests
+      - ['all', 'own']
+      - label: tests
+        include_blank: true
+  conditions:
+    conditions_tests: 'all'
+
+responses_index:
+  label: 'Access Responses'
+  resource: 'response'
+  action: 'index'
+  allowed: false
+  elements:
+    - select:
+      - conditions_responses
+      - ['all', 'own']
+      - label: tests
+        include_blank: true
+  conditions:
+    conditions_responses: 'all'
+
+responses_create:
+  label: 'Create Responses'
+  resource: 'response'
+  action: 'create'
+  allowed: true
