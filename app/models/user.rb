@@ -36,10 +36,6 @@ class User < ApplicationRecord
     roles.eager_load(:permissions).map(&:permissions).flatten
   end
 
-  def permissions_combined
-    permissions.map(&:combined)
-  end
-
   def role?(role)
     roles.any? { |r| r.name.underscore.to_sym == role }
   end

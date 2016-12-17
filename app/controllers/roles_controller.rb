@@ -47,7 +47,8 @@ class RolesController < ApplicationController
   private
 
   def role_params
-    params.require(:role).permit!
+    params.require(:role).merge(permissions_attributes: params[:permissions_attributes], user_ids: params[:user_ids])
+          .permit(:id, :name, user_ids: [], permissions_attributes: [:id, :allowed, conditions: []])
   end
 
 end

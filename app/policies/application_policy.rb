@@ -1,13 +1,14 @@
 module PolicyHelper
 
   def permissions resource, action
-    policy_permissions.select { |p| p['resource'] == resource.to_s && p['action'] == action.to_s }
+    key = resource.to_s + '_' + action.to_s
+    policy_permissions.select { |p| p['key'] == key}
   end
 
   private
 
   def policy_permissions
-    @permissions ||= @user.permissions_combined
+    @permissions ||= @user.permissions
   end
 
 end

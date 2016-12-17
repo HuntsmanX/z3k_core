@@ -2,6 +2,8 @@ class ApplicationController < ActionController::API
   include DeviseTokenAuth::Concerns::SetUserByToken
   include Pundit
 
+  alias_method :current_user, :current_v1_user
+
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   private

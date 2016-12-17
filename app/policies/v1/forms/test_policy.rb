@@ -1,4 +1,4 @@
-class TestPolicy < ApplicationPolicy
+class V1::Forms::TestPolicy < ApplicationPolicy
 
   def index?
     permissions(:test, :index).any? { |p| p['allowed'] }
