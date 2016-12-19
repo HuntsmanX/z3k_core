@@ -5,8 +5,8 @@ class Forms::Test::Section < ApplicationRecord
 
   has_many   :fields, through: :questions, class_name: 'Forms::Test::Field'
 
-  enum required_score_unit:   [:points, :percent], _prefix: true
-  enum acceptable_score_unit: [:points, :percent], _prefix: true
+  enum required_score_unit:    [:points, :percent], _prefix: true
+  enum acceptable_score_unit:  [:points, :percent], _prefix: true
   enum show_next_section:      [:show_next_depending_on_score, :show_next_regardless_of_score]
 
   validates :title,             presence: true
