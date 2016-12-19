@@ -13,21 +13,21 @@ describe ::Forms::CheckResponseSection do
   let!(:option)        { FactoryGirl.create :option, content: '11', is_correct: false }
   let!(:option_second) { FactoryGirl.create :option, content: '10', is_correct: true }
 
-  it "cheks right response section (points)" do
+  it "checks right response section (points)" do
     full_test = create_full_test
     response = ::Forms::DuplicateTestForResponse.new(user_ua, full_test.id).response
     update_response_section_for_correct_answer(response.sections.first)
     expect(::Forms::CheckResponseSection.check(response.sections.first)).to be true
   end
 
-  it "cheks wrong response section (points)" do
+  it "checks wrong response section (points)" do
     full_test = create_full_test
     response = ::Forms::DuplicateTestForResponse.new(user_ua, full_test.id).response
     update_response_section_for_incorrect_answer(response.sections.first)
     expect(::Forms::CheckResponseSection.check(response.sections.first)).to be false
   end
 
-  it "cheks right response section (percent)" do
+  it "checks right response section (percent)" do
     full_test = create_full_test
     response = ::Forms::DuplicateTestForResponse.new(user_ua, full_test.id).response
     response.sections.first.update(acceptable_score_unit: 'percent', required_score_unit: 'percent',  acceptable_score: 50)
@@ -35,7 +35,7 @@ describe ::Forms::CheckResponseSection do
     expect(::Forms::CheckResponseSection.check(response.sections.first)).to be true
   end
 
-  it "cheks wrong response section (percent)" do
+  it "checks wrong response section (percent)" do
     full_test = create_full_test
     response = ::Forms::DuplicateTestForResponse.new(user_ua, full_test.id).response
     response.sections.first.update(acceptable_score_unit: 'percent', required_score_unit: 'percent',  acceptable_score: 50)
