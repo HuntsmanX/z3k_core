@@ -12,7 +12,7 @@ describe Forms::Test::Field do
     expect(field_with_options).to be_valid
   end
 
-	it "has unvalid score and must be present at least two options" do
+	it "has invalid score and must be present at least two options" do
     field_without_score_and_options.valid?
     expect(field_without_score_and_options.errors[:score]).to include("can't be blank")
     expect(field_without_score_and_options.errors[:score]).to include("is not a number")

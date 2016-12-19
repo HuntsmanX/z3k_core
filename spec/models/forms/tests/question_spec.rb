@@ -12,7 +12,7 @@ describe Forms::Test::Question do
     expect(question_with_fields).to be_valid
   end
 
-	it "has unvalid fields_count" do
+	it "has invalid fields_count" do
     question_without_fields.valid?
     expect(question_without_fields.errors[:question]).to include("must contain at least one field")
   end
