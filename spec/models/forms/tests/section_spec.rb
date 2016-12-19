@@ -10,7 +10,7 @@ describe Forms::Test::Section do
   let!(:section_with_questions)             { FactoryGirl.build :section_with_questions }
   let!(:section_without_max_required_score) { FactoryGirl.build :section, required_score_unit: :percent, required_score: 800}
 
-  it "has a valid factory" do
+  it "has a valid section" do
     expect(section).to be_valid
   end
 

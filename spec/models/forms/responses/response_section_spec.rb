@@ -5,7 +5,7 @@ describe Forms::Response::Section do
   let!(:response_section_with_questions)     { FactoryGirl.create :response_section_with_questions }
   let!(:response_section_without_time_limit) { FactoryGirl.build :response_section, time_limit: nil }
 
-  it "has a valid factory" do
+  it "has a valid response section" do
     expect(response_section).to be_valid
   end
 

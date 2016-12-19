@@ -4,7 +4,7 @@ describe Forms::Test::Field do
   let!(:field_with_options)              { FactoryGirl.create :field_with_options }
   let!(:field_without_score_and_options) { FactoryGirl.build :field, score: nil }
 
-  it "has a valid factory" do
+  it "has a valid field with options" do
     expect(field_with_options).to be_valid
   end
 

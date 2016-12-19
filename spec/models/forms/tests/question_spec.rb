@@ -4,7 +4,7 @@ describe Forms::Test::Question do
   let!(:question_with_fields)     { FactoryGirl.create :question_with_fields }
   let!(:question_without_fields)  { FactoryGirl.build :question }
 
-  it "has a valid factory" do
+  it "has a valid question with fields" do
     expect(question_with_fields).to be_valid
   end
 
