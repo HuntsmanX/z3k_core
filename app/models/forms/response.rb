@@ -12,7 +12,7 @@ class Forms::Response < ApplicationRecord
 
   default_scope -> { order('created_at DESC') }
 
-  def successful
+  def successful?
     self&.sections&.pluck(:is_successful).uniq.include?(false || nil) ? false : true
   end
 

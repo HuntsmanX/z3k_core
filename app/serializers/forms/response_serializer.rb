@@ -34,4 +34,7 @@ class Forms::ResponseSerializer < ApplicationSerializer
     object.created_at.strftime '%d %B %Y'
   end
 
+	def successful
+		object.successful?
+	end
 end
