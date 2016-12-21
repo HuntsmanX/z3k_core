@@ -16,7 +16,7 @@ class V1::Forms::TestsController < ApplicationController
 
   def show
     test = ::Forms::Test.with_nested.find params[:id]
-    authorize [:v1, :forms, :test]
+    authorize [:v1, test]
     render json: test, include: [sections: [questions: [fields: :options]]]
   end
 
@@ -31,8 +31,8 @@ class V1::Forms::TestsController < ApplicationController
   end
 
   def destroy
-    authorize [:v1, :forms, :test]
     test = ::Forms::Test.find params[:id]
+    authorize [:v1, test]
     test.destroy
     render json: {}
   end

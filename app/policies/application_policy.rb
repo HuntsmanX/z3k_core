@@ -21,7 +21,7 @@ class ApplicationPolicy
 
   def initialize(user, record)
     @user = user
-    @record = record
+    @record = record.is_a?(Array) ? record.last : record
   end
 
   def index?

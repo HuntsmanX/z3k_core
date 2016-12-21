@@ -10,7 +10,7 @@ class V1::Forms::ResponsesController < ApplicationController
 
   def show
     response = ::Forms::Response.with_nested.find params[:id]
-    authorize [:v1, :forms, :response]
+    authorize [:v1, response]
     render json: response, include: [sections: [questions: [fields: :options]]]
   end
 
