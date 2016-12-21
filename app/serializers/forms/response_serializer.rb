@@ -8,13 +8,13 @@ class Forms::ResponseSerializer < ApplicationSerializer
     :user_first_name_eng,
     :first_section_uid,
     :sections_count,
-    :total_questions,
+    :questions_count,
     :max_score,
     :user_score,
     :sections_count,
     :created_at_formatted,
     :checked,
-    :successful
+    :is_successful
 
   has_many :sections, if: :include_nested?
 
@@ -34,7 +34,4 @@ class Forms::ResponseSerializer < ApplicationSerializer
     object.created_at.strftime '%d %B %Y'
   end
 
-	def successful
-		object.successful?
-	end
 end

@@ -1,18 +1,13 @@
 class Forms::Response::Field < ApplicationRecord
+
   belongs_to :question, class_name: 'Forms::Response::Question', inverse_of: :fields
   has_many   :options,  class_name: 'Forms::Response::Option',   inverse_of: :field,  dependent: :destroy
 	has_one 	 :section, through: :question,  class_name: 'Forms::Response::Section'
 
 	delegate :response, to: :section, allow_nil: true
 
-	after_save :recalculate_scores
-	after_destroy :recalculate_scores
-
-  after_save :set_response_checked
-  after_destroy :set_response_checked
-
-  after_save :set_section_successful
-  after_destroy :set_section_successful
+	after_save    :recalculate_scores, :recalculate_checked, :recalculate_successful
+	after_destroy :recalculate_scores, :recalculate_checked, :recalculate_successful
 
   enum field_type: [
    :text_input,
@@ -31,31 +26,15 @@ class Forms::Response::Field < ApplicationRecord
 	private
 
 	def recalculate_scores
-		max_score =  response&.fields&.sum('score')
-		user_score = response&.fields&.sum('user_score')
-		response&.update_attributes(max_score: max_score, user_score: user_score) if max_score && user_score
+    response.recalculate_scores!
 	end
 
-  def set_response_checked
-	   if (response&.fields.pluck(:checked).uniq.include? false)
-		   response&.update_attributes(checked: false)
-	   else
-		   response&.update_attributes(checked: true)
-	   end
+  def recalculate_checked
+	  response.recalculate_checked!
   end
 
-	def set_section_successful
-		user_score = self.section&.fields&.sum('user_score')
-	  if self.section.required_score_unit_percent?
-			self.section&.update_attributes(is_successful: user_score >= count_ratio)
-	  else
-		  self.section&.update_attributes(is_successful: user_score >= self.section.required_score)
-	  end
-	end
-
-	def count_ratio
-		max_score = self.section&.fields&.sum('score')
-		max_score * self.section.required_score / 100
-	end
+  def recalculate_successful
+    section.recalculate_successful!
+  end
 
 end

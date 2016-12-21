@@ -17,28 +17,36 @@ class Forms::Test::Section < ApplicationRecord
   validates :acceptable_score,  numericality: true
 
   validate  :max_required_score
+  validate  :max_acceptable_score
 
   def max_required_score
     return unless required_score_unit_percent? && required_score.to_i > 100
     errors.add :required_score, 'should be less than or equal to 100%'
   end
 
+  def max_acceptable_score
+    return unless acceptable_score_unit_percent? && acceptable_score.to_i > 100
+    errors.add :acceptable_score, 'should be less than or equal to 100%'
+  end
+
   def alerts
     alerts = []
 
-    if questions.count.zero?
+    if questions_count.blank?
       alerts << 'This section has no questions'
     end
 
+    # TODO Think how to avoid a query to the database
     if required_score > fields.sum(:score) && required_score_unit_points?
       alerts << 'Required score is larger than max score'
     end
 
+    # TODO Think how to avoid a query to the database
     if acceptable_score > fields.autocheck.sum(:score) && acceptable_score_unit_points?
       alerts << 'Acceptable autoscore is larger than max autoscore'
     end
 
     alerts
   end
-  
+
 end

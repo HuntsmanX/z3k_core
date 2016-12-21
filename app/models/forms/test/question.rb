@@ -1,5 +1,5 @@
 class Forms::Test::Question < ApplicationRecord
-  belongs_to :section, class_name: 'Forms::Test::Section', inverse_of: :questions
+  belongs_to :section, class_name: 'Forms::Test::Section', inverse_of: :questions, counter_cache: true
   has_many   :fields,  class_name: 'Forms::Test::Field',   inverse_of: :question,  dependent: :destroy
 
   accepts_nested_attributes_for :fields, allow_destroy: true
