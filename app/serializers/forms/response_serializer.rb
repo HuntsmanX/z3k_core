@@ -34,12 +34,7 @@ class Forms::ResponseSerializer < ApplicationSerializer
     object.created_at.strftime '%d %B %Y'
   end
 
-  def checked
-    false
-  end
-
-  def successful
-    true
-  end
-
+	def successful
+		object.successful?
+	end
 end

@@ -33,7 +33,7 @@ FactoryGirl.define do
   end
 
   factory :response_question, class: Forms::Response::Question do |f|
-    f.content     { "{'entityMap':{'0':{'type':'sequence','mutability':'IMMUTABLE','data':{}}},'blocks':[{'key':'8qdri','text':'Untitled question','type':'unstyled','depth':0,'inlineStyleRanges':[],'entityRanges':[],'data':{}},{'key':'8b3ej','text':' ','type':'atomic','depth':0,'inlineStyleRanges':[],'entityRanges':[{'offset':0,'length':1,'key':0}],'data':{}},{'key':'f3de1','text':'','type':'unstyled','depth':0,'inlineStyleRanges':[],'entityRanges':[],'data':{}}]}" }
+    f.content     { "{'entityMap':{'0':{'type':'text_input','mutability':'IMMUTABLE','data':{}}},'blocks':[{'key':'75tv5','text':'1+1 = ','type':'unstyled','depth':0,'inlineStyleRanges':[],'entityRanges':[],'data':{}},{'key':'7mqe2','text':'' ','type':'atomic','depth':0,'inlineStyleRanges':[],'entityRanges':[{'offset':0,'length':1,'key':0}],'data':{}},{'key':'5ie67','text':'','type':'unstyled','depth':0, 'inlineStyleRanges':[],'entityRanges':[],'data':{}}]}" }
     f.order_index { 0 }
     factory :response_question_with_fields do
       before(:create) do |question|
@@ -43,9 +43,9 @@ FactoryGirl.define do
   end
 
   factory :response_field, class: Forms::Response::Field do |f|
-    f.field_type { "sequence" }
-    f.block_key  { "8b3ej" }
-    f.content    { "" }
+    f.field_type { "text_input" }
+    f.block_key  { "7mqe2" }
+    f.content    { "2" }
     f.score      { 10 }
     f.autocheck  { true }
     f.user_score {}

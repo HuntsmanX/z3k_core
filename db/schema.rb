@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161213100208) do
+ActiveRecord::Schema.define(version: 20161220145543) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -80,6 +80,7 @@ ActiveRecord::Schema.define(version: 20161213100208) do
     t.integer  "show_next_section"
     t.integer  "questions_to_show"
     t.boolean  "shuffle_questions"
+    t.boolean  "is_successful"
     t.index ["response_id"], name: "index_forms_response_sections_on_response_id", using: :btree
   end
 
@@ -92,6 +93,7 @@ ActiveRecord::Schema.define(version: 20161213100208) do
     t.integer  "sections_count", default: 0
     t.integer  "max_score",      default: 0
     t.integer  "user_score",     default: 0
+    t.boolean  "checked"
     t.index ["test_id"], name: "index_forms_responses_on_test_id", using: :btree
     t.index ["user_id"], name: "index_forms_responses_on_user_id", using: :btree
   end
