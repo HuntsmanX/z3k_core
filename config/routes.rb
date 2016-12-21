@@ -41,7 +41,7 @@ Rails.application.routes.draw do
   end
 
   resources :roles do
-
+    collection { get :find }
   end
 
 end

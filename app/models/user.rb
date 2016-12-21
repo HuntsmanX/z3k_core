@@ -7,6 +7,8 @@ class User < ApplicationRecord
 
   include DeviseTokenAuth::Concerns::User
 
+  default_scope { order('id DESC') }
+
   has_many :responses, class_name: 'Forms::Response' #TODO: Add scope
   has_many :role_assignments
   has_many :roles, through: :role_assignments
@@ -44,12 +46,7 @@ class User < ApplicationRecord
     searchable = %w(first_name last_name first_name_eng last_name_eng)
     condition = ->(attr) { "(names ->> '#{attr}')" }
     query = searchable.map{|a| condition.call(a)}.join(' || ')
-
-    if search
-      where("#{query} ILIKE ?", "%#{search}%")
-    else
-      all
-    end
+    where("#{query} ILIKE ?", "%#{search.to_s}%")
   end
 
   private

@@ -2,6 +2,8 @@ class Permission < ApplicationRecord
 
   belongs_to :role
 
+  attr_accessor :label
+
   def self.get_schema
     YAML::load_file(File.join(Rails.root, '/config/permissions_schema.yml')).with_indifferent_access
   end
