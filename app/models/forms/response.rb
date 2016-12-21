@@ -11,4 +11,9 @@ class Forms::Response < ApplicationRecord
   validates :user_id, presence: true
 
   default_scope -> { order('created_at DESC') }
+
+  def successful
+    self&.sections&.pluck(:is_successful).uniq.include?(false || nil) ? false : true
+  end
+
 end
