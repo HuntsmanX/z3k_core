@@ -35,7 +35,7 @@ class Forms::ResponseSerializer < ApplicationSerializer
   end
 
   def checked
-    false
+    true
   end
 
   def successful
