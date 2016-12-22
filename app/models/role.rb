@@ -11,6 +11,7 @@ class Role < ApplicationRecord
 
   def permissions
     stored_values = super
+
     schema = PermissionsSchema.new
 
     diff = schema.permission_keys - stored_values.map(&:key)

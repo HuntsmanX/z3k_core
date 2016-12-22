@@ -1,13 +1,14 @@
 class Forms::Test::Field < ApplicationRecord
   belongs_to :question, class_name: 'Forms::Test::Question', inverse_of: :fields
   has_many   :options,  class_name: 'Forms::Test::Option',   inverse_of: :field,  dependent: :destroy
-  has_one 	 :section, through: :question,  class_name: 'Forms::Test::Section'
 
-  scope :autocheck, -> {where(autocheck: true)}
+  has_one 	 :section, through: :question, class_name: 'Forms::Test::Section'
+
+  scope :autocheck, -> { where(autocheck: true) }
 
   delegate :test, to: :section, allow_nil: true
 
-  after_save :recalculate_scores
+  after_save    :recalculate_scores
   after_destroy :recalculate_scores
 
   enum field_type: [
@@ -58,8 +59,7 @@ class Forms::Test::Field < ApplicationRecord
   private
 
   def recalculate_scores
-    max_score =  test&.fields&.sum('score')
-    test&.update_attributes(max_score: max_score) if max_score
+    test&.recalculate_max_score!
   end
 
   def has_content?

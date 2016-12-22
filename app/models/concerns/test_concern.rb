@@ -5,7 +5,7 @@ module TestConcern
 		scope :with_nested, -> { includes(sections: [questions: [fields: :options]]) }
 	end
 
-	def total_questions
+	def questions_count
 		self.sections.map { |s| s.questions.size }.inject(:+) || 0
 	end
 
@@ -31,7 +31,4 @@ module TestConcern
 		total_str
 	end
 
-	def sections_count
-		self.sections.size
-	end
 end

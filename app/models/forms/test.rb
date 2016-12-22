@@ -7,10 +7,6 @@ class Forms::Test < ApplicationRecord
 
   validates :name, presence: true
 
-  def self.search_by_name(pattern)
-    where('name ILIKE ?', "%#{pattern}%")
-  end
-
   def alerts
     alerts = []
 
@@ -23,6 +19,11 @@ class Forms::Test < ApplicationRecord
     end
 
     alerts
+  end
+
+  def recalculate_max_score!
+    max_score = fields.sum(:score)
+    update_attributes(max_score: max_score) if max_score
   end
 
 end

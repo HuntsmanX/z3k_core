@@ -9,8 +9,7 @@ class V1::Forms::TestsController < ApplicationController
   end
 
   def find_test
-    tests = ::Forms::Test.search_by_name(params[:q])
-    tests = ::Forms::Test.all unless tests.any?
+    tests = ::Forms::Test.search({ name_cont: params[:q] }).result
     render json: tests.as_json(methods: :alerts)
   end
 
