@@ -11,13 +11,18 @@ class Role < ApplicationRecord
 
   def permissions
     stored_values = super
-    schema = Permission.get_schema
 
-    diff = schema.keys - stored_values.map(&:key)
+    schema = PermissionsSchema.new
 
-    if diff.any?
-      diff.each { |k| super.create(key: k, allowed: schema[k][:allowed], conditions: schema[k][:conditions]) }
-    end
+    diff = schema.permission_keys - stored_values.map(&:key)
+
+    diff.each do |key|
+      super.create({
+        key:        key,
+        allowed:    false,
+        conditions: schema.permission_for(key).default_conditions
+      })
+    end if diff.any?
 
     super
   end

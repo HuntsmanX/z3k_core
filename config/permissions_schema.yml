@@ -1,73 +1,33 @@
-tests_index:
-  label: 'Access Tests'
-  resource: 'test'
-  action: 'index'
-  allowed: true
-  elements:
-    - select:
-      - conditions_tests
-      - ['all', 'own']
-      - label: tests
-        include_blank: true
-  conditions:
-    conditions_tests: 'all'
+tests:
+  class: '::Forms::Test'
+  name: 'Tests'
+  permissions:
+    - key: 'test_index'
+      action: 'index'
+      label: 'Access tests list'
+    - key: 'test_create'
+      action: 'create'
+      label: 'Add new tests'
+    - key: 'test_show'
+      action: 'show'
+      label: 'Show test'
+    - key: 'test_edit'
+      action: 'edit'
+      label: 'Edit tests'
+    - key: 'test_delete'
+      action: 'delete'
+      label: 'Delete tests'
 
-tests_create:
-  label: 'Create Tests'
-  resource: 'test'
-  action: 'create'
-  allowed: true
-  element:
-    name: 'name'
-    label: 'Name'
-    rules: ''
-  conditions:
-    conditions_tests: 'all'
-
-tests_edit:
-  label: 'Edit Tests'
-  resource: 'test'
-  action: 'edit'
-  allowed: true
-  elements:
-    - select:
-      - conditions_tests
-      - ['all', 'own']
-      - label: tests
-        include_blank: true
-  conditions:
-    conditions_tests: 'all'
-
-tests_delete:
-  label: 'Delete Tests'
-  resource: 'test'
-  action: 'delete'
-  allowed: true
-  elements:
-    - select:
-      - conditions_tests
-      - ['all', 'own']
-      - label: tests
-        include_blank: true
-  conditions:
-    conditions_tests: 'all'
-
-responses_index:
-  label: 'Access Responses'
-  resource: 'response'
-  action: 'index'
-  allowed: false
-  elements:
-    - select:
-      - conditions_responses
-      - ['all', 'own']
-      - label: tests
-        include_blank: true
-  conditions:
-    conditions_responses: 'all'
-
-responses_create:
-  label: 'Create Responses'
-  resource: 'response'
-  action: 'create'
-  allowed: true
+responses:
+  class: '::Forms::Response'
+  name: 'Responses'
+  permissions:
+    - key: 'response_index'
+      action: 'index'
+      label: 'Access responses list'
+    - key: 'response_show'
+      action: 'show'
+      label: 'Show response'
+    - key: 'response_create'
+      action: 'create'
+      label: 'Create new responses'

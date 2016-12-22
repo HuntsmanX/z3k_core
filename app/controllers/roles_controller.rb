@@ -6,9 +6,7 @@ class RolesController < ApplicationController
   end
 
   def create
-    users = User.where(id: params[:user_ids])
     role = Role.new(name: role_params[:name])
-    role.assign_attributes(users: users) if users.any?
     role.save
     render json: role
   end
@@ -44,10 +42,16 @@ class RolesController < ApplicationController
     render json: results.to_json
   end
 
+  def find
+    results = Role.ransack(name_i_cont: params[:q]).result
+    render json: results
+  end
+
   private
 
   def role_params
-    params.require(:role).permit!
+    params.require(:role).merge(permissions_attributes: params[:permissions_attributes])
+          .permit(:id, :name, permissions_attributes: [:id, :allowed, conditions: []])
   end
 
 end
