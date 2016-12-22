@@ -3,6 +3,7 @@ class V1::Forms::TestsController < ApplicationController
   respond_to :json
 
   def index
+    authorize [:v1, :forms, :test]
     tests = ::Forms::Test.with_nested.order(created_at: :desc).search(params[:q]).result.page(params[:page]).per(params[:per])
     render json: tests, with_nested: false, meta: pagination_dict(tests)
   end
@@ -15,10 +16,12 @@ class V1::Forms::TestsController < ApplicationController
 
   def show
     test = ::Forms::Test.with_nested.find params[:id]
+    authorize [:v1, test]
     render json: test, include: [sections: [questions: [fields: :options]]]
   end
 
   def create
+    authorize [:v1, :forms, :test]
     test = ::Forms::Test.new test_params
     if test.save
       render json: test
@@ -29,6 +32,7 @@ class V1::Forms::TestsController < ApplicationController
 
   def destroy
     test = ::Forms::Test.find params[:id]
+    authorize [:v1, test]
     test.destroy
     render json: {}
   end

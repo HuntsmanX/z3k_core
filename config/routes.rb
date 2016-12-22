@@ -3,7 +3,10 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   namespace :v1 do
-    resources :users
+
+    resources :users do
+      collection { get :find }
+    end
     mount_devise_token_auth_for 'User', at: 'auth', controllers: { sessions: 'sessions' }, skip: [:omniauth_callbacks]
 
     namespace :forms do
@@ -35,6 +38,10 @@ Rails.application.routes.draw do
 
       get 'testees/find' => 'testees#find', constraints: {format: /(js|json)/}
     end
+  end
+
+  resources :roles do
+    collection { get :find }
   end
 
 end

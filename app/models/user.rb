@@ -7,7 +7,11 @@ class User < ApplicationRecord
 
   include DeviseTokenAuth::Concerns::User
 
+  default_scope { order('id DESC') }
+
   has_many :responses, class_name: 'Forms::Response' #TODO: Add scope
+  has_many :role_assignments
+  has_many :roles, through: :role_assignments
   belongs_to :city
 
   before_save :set_timezone, :transliterate_name
@@ -28,6 +32,21 @@ class User < ApplicationRecord
 
   def full_name_eng
     "#{first_name_eng} #{last_name_eng}"
+  end
+
+  def permissions
+    roles.eager_load(:permissions).map(&:permissions).flatten
+  end
+
+  def role?(role)
+    roles.any? { |r| r.name.underscore.to_sym == role }
+  end
+
+  def self.search(search)
+    searchable = %w(first_name last_name first_name_eng last_name_eng)
+    condition = ->(attr) { "(names ->> '#{attr}')" }
+    query = searchable.map{|a| condition.call(a)}.join(' || ')
+    where("#{query} ILIKE ?", "%#{search.to_s}%")
   end
 
   private
