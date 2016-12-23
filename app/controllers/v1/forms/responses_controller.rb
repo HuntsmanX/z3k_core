@@ -3,7 +3,7 @@ class V1::Forms::ResponsesController < ApplicationController
   respond_to :json
 
   def index
-    authorize Forms::Response
+    authorize ::Forms::Response
     responses = ::Forms::Response.with_nested.includes(:user).search(params[:q]).result.page(params[:page])
     render json: responses, with_nested: false, meta: pagination_dict(responses)
   end
@@ -15,7 +15,7 @@ class V1::Forms::ResponsesController < ApplicationController
   end
 
   def create
-    authorize Forms::Response
+    authorize ::Forms::Response
     form = ::Forms::CreateResponseForm.new
      if form.submit(response_params)
        render json: form.model

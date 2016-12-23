@@ -3,7 +3,7 @@ class V1::Forms::TestsController < ApplicationController
   respond_to :json
 
   def index
-    authorize Forms::Test
+    authorize ::Forms::Test
     tests = ::Forms::Test.with_nested.order(created_at: :desc).search(params[:q]).result.page(params[:page]).per(params[:per])
     render json: tests, with_nested: false, meta: pagination_dict(tests)
   end
@@ -30,7 +30,7 @@ class V1::Forms::TestsController < ApplicationController
   end
 
   def create
-    authorize Forms::Test
+    authorize ::Forms::Test
     test = ::Forms::Test.new test_params
     if test.save
       render json: test
