@@ -19,6 +19,16 @@ class V1::Forms::TestsController < ApplicationController
     render json: test, include: [sections: [questions: [fields: :options]]]
   end
 
+  def update
+    test = ::Forms::Test.find params[:id]
+    authorize test
+    if test.update_attributes(test_params)
+      render json: test
+    else
+      render json: test.errors.messages, status: 422
+    end
+  end
+
   def create
     authorize Forms::Test
     test = ::Forms::Test.new test_params
@@ -32,14 +42,19 @@ class V1::Forms::TestsController < ApplicationController
   def destroy
     test = ::Forms::Test.find params[:id]
     authorize test
-    test.destroy
-    render json: {}
+
+    if test.destroy
+      render json: test
+    else
+      render json: test.errors.messages, status: 422
+    end
+
   end
 
   private
 
   def test_params
-    params.require(:test).permit(:name)
+    params.require(:test).permit(:name, :success_criterion, :required_score, :required_score_unit, :successful_sections_count)
   end
 
 end
