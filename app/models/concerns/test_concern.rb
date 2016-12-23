@@ -3,6 +3,9 @@ module TestConcern
 
 	included do
 		scope :with_nested, -> { includes(sections: [questions: [fields: :options]]) }
+
+		enum success_criterion: [:total_score, :successful_sections]
+		enum required_score_unit: [:points, :percent]
 	end
 
 	def questions_count

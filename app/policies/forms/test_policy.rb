@@ -16,6 +16,10 @@ class Forms::TestPolicy < ApplicationPolicy
     allowed?(:test, :edit)
   end
 
+  def update?
+    allowed?(:test, :update)
+  end
+
   def destroy?
     allowed?(:test, :delete)
   end

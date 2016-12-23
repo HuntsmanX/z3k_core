@@ -11,8 +11,12 @@ class Forms::DuplicateTestForResponse
   private
 
   def duplicate_test!
-     @response.name =    @test.name
-     @response.test_id = @test.id
+     @response.name                      = @test.name
+     @response.test_id                   = @test.id
+     @response.success_criterion         = @test.success_criterion
+     @response.required_score            = @test.required_score
+     @response.required_score_unit       = @test.required_score_unit
+     @response.successful_sections_count = @test.successful_sections_count
      @response.save
 
      duplicate_sections if @test.sections.any?

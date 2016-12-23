@@ -6,7 +6,11 @@ class Forms::TestSerializer < ApplicationSerializer
     :max_score,
     :shuffle_questions,
     :time_limit,
-    :alerts
+    :alerts,
+    :success_criterion,
+    :required_score,
+    :required_score_unit,
+    :successful_sections_count
 
   has_many :sections, if: :include_nested?
 end
