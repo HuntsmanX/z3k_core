@@ -5,9 +5,6 @@ class Forms::Test < ApplicationRecord
   has_many :sections, class_name: 'Forms::Test::Section', inverse_of: :test, dependent: :destroy
   has_many :fields, through: :sections, class_name: 'Forms::Test::Field'
 
-  enum success_criterion: [:total_score, :successful_sections]
-  enum required_score_unit: [:points, :percent]
-
   validates :name, presence: true
   validate :required_score_less_than_max, if: :total_score?
   validate :percentage_less_than_100, if: :total_score?
