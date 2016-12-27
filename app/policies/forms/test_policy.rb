@@ -1,23 +1,27 @@
 class Forms::TestPolicy < ApplicationPolicy
 
   def index?
-    allowed?(:test, :index)
+    allowed? 'forms:test:view'
+  end
+
+  def find?
+    allowed? 'forms:response:create'
   end
 
   def create?
-    allowed?(:test, :create)
+    allowed? 'forms:test:update'
   end
 
   def show?
-    allowed?(:test, :show)
+    allowed? 'forms:test:view'
   end
 
-  def edit?
-    allowed?(:test, :edit)
+  def update?
+    allowed? 'forms:test:update'
   end
 
   def destroy?
-    allowed?(:test, :delete)
+    allowed? 'forms:test:delete'
   end
 
 end

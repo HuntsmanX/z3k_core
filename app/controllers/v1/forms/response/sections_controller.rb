@@ -1,9 +1,9 @@
 class V1::Forms::Response::SectionsController < ApplicationController
-  respond_to :json
 
-#TODO: N+1 in finder
+  #TODO: N+1 in finder
 	def update
 		section = ::Forms::Response::Section.friendly.find(params[:id])
+    authorize section
 		section.update_attributes section_params
 
 		successful = ::Forms::CheckResponseSection.check(section)
@@ -14,8 +14,11 @@ class V1::Forms::Response::SectionsController < ApplicationController
 
 	def show
 		section = ::Forms::Response::Section.includes(questions: [fields: :options]).friendly.find(params[:id])
+    authorize section
 		render json: section, include: [questions: [fields: :options]], testee: true
 	end
+
+  private
 
 	def section_params
 		params.require(:section).permit(

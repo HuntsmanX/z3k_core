@@ -1,10 +1,12 @@
 class ApplicationController < ActionController::API
   include DeviseTokenAuth::Concerns::SetUserByToken
   include Pundit
-  
+
   alias_method :current_user, :current_v1_user
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
+  respond_to :json
 
   private
 
@@ -17,7 +19,7 @@ class ApplicationController < ActionController::API
   end
 
   def user_not_authorized
-    render json: {unauthorized: 'You are not authorized to perform this action.'}
+    render json: {}, status: 403
   end
 
 end

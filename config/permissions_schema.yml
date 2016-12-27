@@ -1,33 +1,78 @@
-tests:
-  class: '::Forms::Test'
-  name: 'Tests'
-  permissions:
-    - key: 'test_index'
-      action: 'index'
-      label: 'Access tests list'
-    - key: 'test_create'
-      action: 'create'
-      label: 'Add new tests'
-    - key: 'test_show'
-      action: 'show'
-      label: 'Show test'
-    - key: 'test_edit'
-      action: 'edit'
-      label: 'Edit tests'
-    - key: 'test_delete'
-      action: 'delete'
-      label: 'Delete tests'
+forms:
 
-responses:
-  class: '::Forms::Response'
-  name: 'Responses'
-  permissions:
-    - key: 'response_index'
-      action: 'index'
-      label: 'Access responses list'
-    - key: 'response_show'
-      action: 'show'
-      label: 'Show response'
-    - key: 'response_create'
-      action: 'create'
-      label: 'Create new responses'
+  test:
+
+    name: 'Tests'
+    permissions:
+
+      - action: 'view'
+        label:  'View existing tests'
+
+      - action: 'update'
+        label:  'Update existing and create new tests'
+
+      - action: 'delete'
+        label:  'Delete existing tests'
+        # conditions:
+        #
+        #   has_alerts:
+        #     type: 'select'
+        #     label: 'Has alerts'
+        #     options:
+        #       all: 'All'
+        #       yes: 'Tests with alerts'
+
+  response:
+
+    name: 'Responses'
+    permissions:
+
+      - action: 'view'
+        label:  'View test responses'
+
+      - action: 'create'
+        label:  'Create new responses / launch tests for candidates'
+
+      - action: 'update'
+        label:  'Assess test responses'
+
+  mistake_type:
+
+    name: 'Settings -> Mistake Types'
+    permissions:
+
+      - action: 'view'
+        label:  'View mistake types'
+
+      - action: 'update'
+        label:  'Update existing and create new mistake types'
+
+      - action: 'delete'
+        label:  'Delete mistake types'
+
+staff:
+
+  user:
+
+    name: 'Settings -> Users'
+    permissions:
+
+      - action: 'view'
+        label:  'View users'
+
+      - action: 'update'
+        label:  'Update users'
+
+  role:
+
+    name: 'Settings -> Roles'
+    permissions:
+
+      - action: 'view'
+        label:  'View roles'
+
+      - action: 'update'
+        label:  'Update and create roles'
+
+      - action: 'delete'
+        label:  'Delete roles'

@@ -4,17 +4,28 @@ Rails.application.routes.draw do
 
   namespace :v1 do
 
+    resources :inits, only: [] do
+      get :forms, on: :collection
+    end
+
     resources :users do
       collection { get :find }
     end
-    mount_devise_token_auth_for 'User', at: 'auth', controllers: { sessions: 'sessions' }, skip: [:omniauth_callbacks]
+
+    mount_devise_token_auth_for 'User',
+      at:          'auth',
+      skip:        [:omniauth_callbacks],
+      controllers: { sessions: 'sessions' }
+
+    resources :roles do
+      collection { get :find }
+    end
 
     namespace :forms do
-      get 'tests/find_test' => 'tests#find_test'
 
-      resource  :dashboard
-
-      resources :tests
+      resources :tests do
+        get :find, on: :collection
+      end
 
       namespace :test do
         resources :sections do
@@ -37,11 +48,9 @@ Rails.application.routes.draw do
       end
 
       get 'testees/find' => 'testees#find', constraints: {format: /(js|json)/}
-    end
-  end
 
-  resources :roles do
-    collection { get :find }
+    end
+
   end
 
 end

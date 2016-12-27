@@ -1,16 +1,15 @@
 class V1::Forms::Response::QuestionsController < ApplicationController
   before_action :authenticate_v1_user!
-  respond_to :json
 
   def update
     question = ::Forms::Response::Question.find params[:id]
+    authorize question
     if question.update_attributes question_params
       render json: question, include: [fields: :options]
     else
       render json: question.errors.messages, status: 422
     end
   end
-
 
   private
 

@@ -1,14 +1,14 @@
 class V1::Forms::TestsController < ApplicationController
   before_action :authenticate_v1_user!
-  respond_to :json
 
   def index
-    authorize Forms::Test
+    authorize ::Forms::Test
     tests = ::Forms::Test.with_nested.order(created_at: :desc).search(params[:q]).result.page(params[:page]).per(params[:per])
     render json: tests, with_nested: false, meta: pagination_dict(tests)
   end
 
-  def find_test
+  def find
+    authorize ::Forms::Test
     tests = ::Forms::Test.search({ name_cont: params[:q] }).result
     render json: tests.as_json(methods: :alerts)
   end
@@ -20,7 +20,7 @@ class V1::Forms::TestsController < ApplicationController
   end
 
   def create
-    authorize Forms::Test
+    authorize ::Forms::Test
     test = ::Forms::Test.new test_params
     if test.save
       render json: test

@@ -12,7 +12,7 @@ class Role < ApplicationRecord
   def permissions
     stored_values = super
 
-    schema = PermissionsSchema.new
+    schema = PermissionsSchema.instance
 
     diff = schema.permission_keys - stored_values.map(&:key)
 
@@ -22,31 +22,31 @@ class Role < ApplicationRecord
         allowed:    false,
         conditions: schema.permission_for(key).default_conditions
       })
-    end if diff.any?
+    end
 
     super
   end
 
-  def remove_user(id)
-    self.role_assignments.where(user_id: id).delete_all
-  end
+  # def remove_user(id)
+  #   self.role_assignments.where(user_id: id).delete_all
+  # end
+  #
+  # def add_user(id)
+  #   assignment = self.role_assignments.build(user_id: id)
+  #   assignment.save
+  # end
 
-  def add_user(id)
-    assignment = self.role_assignments.build(user_id: id)
-    assignment.save
-  end
-
-  private
-
-  def collect_conditions!(attributes)
-    return attributes.de['conditions'] if attributes.fetch('conditions', false)
-
-    attributes.keys.each do |k|
-      answer = collect_conditions!(attributes[k]) if attributes[k].is_a? Hash
-      return answer if answer
-    end
-
-    false
-  end
+  # private
+  #
+  # def collect_conditions!(attributes)
+  #   return attributes.de['conditions'] if attributes.fetch('conditions', false)
+  #
+  #   attributes.keys.each do |k|
+  #     answer = collect_conditions!(attributes[k]) if attributes[k].is_a? Hash
+  #     return answer if answer
+  #   end
+  #
+  #   false
+  # end
 
 end
