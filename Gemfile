@@ -38,13 +38,13 @@ group :development, :test do
   gem 'pry'
   gem 'pry-nav'
   gem 'awesome_print'
-  gem 'rspec'
-  gem 'rspec-core'
-  gem 'rspec-rails'
 end
 
 group :test do
   gem 'factory_girl_rails'
+  gem 'rspec'
+  gem 'rspec-core'
+  gem 'rspec-rails'
 end
 
 group :development do
