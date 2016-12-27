@@ -1,18 +1,19 @@
 module PolicyHelper
 
-  def permissions resource, action
-    key = resource.to_s + '_' + action.to_s
-    policy_permissions.select { |p| p['key'] == key}
-  end
-
-  def allowed? resource, action
-    permissions(resource, action).any? { |p| p['allowed'] }
+  def allowed? key, &block
+    permissions_for(key).any? do |p|
+      block_given? ? yield(p.conditions) : true
+    end
   end
 
   private
 
+  def permissions_for key
+    policy_permissions.select { |p| p.key == key }
+  end
+
   def policy_permissions
-    @permissions ||= @user.permissions
+    @permissions ||= user.permissions.select { |p| p.allowed }
   end
 
 end
@@ -23,8 +24,8 @@ class ApplicationPolicy
 
   include PolicyHelper
 
-  def initialize(user, record)
-    @user = user
+  def initialize user, record
+    @user = user || GuestUser.new
     @record = record.is_a?(Array) ? record.last : record
   end
 
@@ -35,7 +36,9 @@ class ApplicationPolicy
   class Scope
     attr_reader :user, :scope
 
-    def initialize(user, scope)
+    include PolicyHelper
+
+    def initialize user, scope
       @user = user
       @scope = scope
     end

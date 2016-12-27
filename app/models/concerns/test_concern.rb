@@ -9,7 +9,7 @@ module TestConcern
 	end
 
 	def questions_count
-		self.sections.map { |s| s.questions.size }.inject(:+) || 0
+		self.sections.map { |s| s.questions.to_a.size }.inject(:+) || 0
 	end
 
 	def shuffle_questions

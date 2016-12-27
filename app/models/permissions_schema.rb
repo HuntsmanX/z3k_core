@@ -1,35 +1,6 @@
 class PermissionsSchema
 
-  class Permission
-    include ActiveModel::Model
-
-    attr_accessor :key, :action, :label, :resource_name, :resource_class, :conditions
-
-    def initialize attrs
-      self.assign_attributes attrs
-      format_conditions!
-    end
-
-    def default_conditions
-      conditions.each_with_object({}) do |condition, hash|
-        option = condition.options.first
-        hash[condition[:name]] = option[:value]
-      end
-    end
-
-    private
-
-    def format_conditions!
-      @conditions ||= []
-      @conditions.each do |condition|
-        condition['options'] = condition['options'].map do |key, val|
-          { value: key, label: val }
-        end
-      end
-      @conditions.map! { |condition| OpenStruct.new condition }
-    end
-
-  end
+  include Singleton
 
   def initialize
     path = File.join Rails.root, '/config/permissions_schema.yml'
@@ -37,7 +8,7 @@ class PermissionsSchema
   end
 
   def permissions
-    @permissions ||= resource_keys.map { |key| permissions_for key }.flatten
+    @permissions ||= get_permissions
   end
 
   def permission_keys
@@ -48,21 +19,85 @@ class PermissionsSchema
     permissions.find { |p| p.key == permission_key }
   end
 
-  private
-
-  def resource_keys
-    @schema.keys
+  def condition_attr_names
+    permissions.map(&:conditions).map(&:keys).flatten
   end
 
-  def permissions_for resource_key
-    resource = @schema[resource_key]
+  private
+
+  def get_permissions
+    permissions = app_keys.map do |app_key|
+      get_app_permissions app_key
+    end.flatten
+
+    permissions.each_with_index do |permission, index|
+      permission.order_index = index
+    end
+  end
+
+  def get_app_permissions app_key
+    resource_keys(app_key).map do |resource_key|
+      get_resource_permissions app_key, resource_key
+    end.flatten
+  end
+
+  def get_resource_permissions app_key, resource_key
+    resource = @schema[app_key][resource_key]
 
     resource[:permissions].map do |p|
-      p[:resource_name]  = resource[:name]
-      p[:resource_class] = resource[:class].constantize
+      p[:app]           = app_key
+      p[:resource]      = "#{app_key}:#{resource_key}"
+      p[:key]           = "#{app_key}:#{resource_key}:#{p[:action]}"
+      p[:resource_name] = resource[:name]
 
       Permission.new p
     end
+  end
+
+  def app_keys
+    @schema.keys
+  end
+
+  def resource_keys app_key
+    @schema[app_key].keys
+  end
+
+  class Permission
+
+    include ActiveModel::Model
+
+    attr_accessor :app,
+      :resource,
+      :key,
+      :resource_name,
+      :conditions,
+      :action,
+      :label,
+      :order_index
+
+    def initialize attrs
+      assign_attributes attrs
+      format_conditions!
+    end
+
+    def default_conditions
+      conditions.keys.each_with_object({}) do |c, hash|
+        option = conditions[c][:options].first
+        hash[c] = option[:value]
+      end
+    end
+
+    private
+
+    def format_conditions!
+      @conditions ||= {}
+      @conditions.keys.each do |c|
+        @conditions[c][:options] = @conditions[c][:options].map do |key, val|
+          { value: key, label: val }
+        end
+      end
+    end
+
   end
 
 end

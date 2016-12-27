@@ -1,6 +1,5 @@
 class V1::Forms::TestsController < ApplicationController
   before_action :authenticate_v1_user!
-  respond_to :json
 
   def index
     authorize ::Forms::Test
@@ -8,7 +7,8 @@ class V1::Forms::TestsController < ApplicationController
     render json: tests, with_nested: false, meta: pagination_dict(tests)
   end
 
-  def find_test
+  def find
+    authorize ::Forms::Test
     tests = ::Forms::Test.search({ name_cont: params[:q] }).result
     render json: tests.as_json(methods: :alerts)
   end

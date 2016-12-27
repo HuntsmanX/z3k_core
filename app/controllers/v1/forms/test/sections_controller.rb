@@ -1,8 +1,8 @@
 class V1::Forms::Test::SectionsController < ApplicationController
   before_action :authenticate_v1_user!
-  respond_to :json
 
   def create
+    authorize ::Forms::Test::Section
     section = ::Forms::Test::Section.new section_params
     if section.save
       render json: section, with_nested: false
@@ -13,7 +13,7 @@ class V1::Forms::Test::SectionsController < ApplicationController
 
   def update
     section = ::Forms::Test::Section.find_by_id params[:id]
-
+    authorize section
     if section.update_attributes section_params
       render json: section, with_nested: false
     else
@@ -23,11 +23,13 @@ class V1::Forms::Test::SectionsController < ApplicationController
 
   def destroy
     section = ::Forms::Test::Section.find_by_id params[:id]
+    authorize section
     section.destroy
     render json: {}
   end
 
   def reorder
+    authorize ::Forms::Test::Section
     params[:order].each do |id, index|
       ::Forms::Test::Section.find(id).update_attribute :order_index, index
     end

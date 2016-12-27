@@ -6,8 +6,11 @@ class Forms::Test < ApplicationRecord
   has_many :fields, through: :sections, class_name: 'Forms::Test::Field'
 
   validates :name, presence: true
-  validate :required_score_less_than_max, if: :total_score?
-  validate :percentage_less_than_100, if: :total_score?
+
+  validates :required_score,            presence: true, numericality: true, if: :total_score?
+  validates :successful_sections_count, presence: true, numericality: true, if: :successful_sections?
+
+  validate  :percentage_less_than_100, if: :total_score?
 
   def alerts
     alerts = []
@@ -21,7 +24,11 @@ class Forms::Test < ApplicationRecord
     end
 
     if self.successful_sections? && (sections.count <= self.successful_sections_count)
-      alerts << "'Successful sections count' should be less than or equals to total sections count"
+      alerts << "Successful sections count is larger than total sections count"
+    end
+
+    if self.total_score? && self.points? && self.required_score > self.max_score
+      alerts << "Required score is larger than max score"
     end
 
     alerts
@@ -34,17 +41,10 @@ class Forms::Test < ApplicationRecord
 
   private
 
-  def required_score_less_than_max
-    if self.points?
-      is_valid = self.required_score <= self.max_score
-      errors.add(:required_score, 'should be less than or equals to max score') unless is_valid
-    end
-  end
-
   def percentage_less_than_100
-    if self.percent?
+    if self.total_score? && self.percent?
       is_valid = (0..100).cover?(self.required_score)
-      errors.add(:percentage, 'should be between 0% and 100%') unless is_valid
+      errors.add(:percentage, 'should be less than or equal to 100%') unless is_valid
     end
   end
 

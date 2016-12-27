@@ -1,15 +1,15 @@
-class Forms::ResponsePolicy <  ApplicationPolicy
+class Forms::ResponsePolicy < ApplicationPolicy
 
   def index?
-    allowed?(:response, :index)
+    allowed? 'forms:response:view'
   end
 
   def show?
-    allowed?(:response, :show)
+    allowed?('forms:response:view') || allowed?('forms:response:create')
   end
 
   def create?
-    allowed?(:response, :create)
+    allowed? 'forms:response:create'
   end
 
 end

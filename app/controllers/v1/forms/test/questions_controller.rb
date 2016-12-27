@@ -1,8 +1,8 @@
 class V1::Forms::Test::QuestionsController < ApplicationController
   before_action :authenticate_v1_user!
-  respond_to :json
 
   def create
+    authorize ::Forms::Test::Question
     question = ::Forms::Test::Question.new question_params
     if question.save
       render json: question, include: [fields: :options]
@@ -13,6 +13,7 @@ class V1::Forms::Test::QuestionsController < ApplicationController
 
   def update
     question = ::Forms::Test::Question.find params[:id]
+    authorize question
     if question.update_attributes question_params
       render json: question, include: [fields: :options]
     else
@@ -22,11 +23,13 @@ class V1::Forms::Test::QuestionsController < ApplicationController
 
   def destroy
     question = ::Forms::Test::Question.find params[:id]
+    authorize question
     question.destroy
     render json: {}
   end
 
   def reorder
+    authorize ::Forms::Test::Question
     params[:order].each do |id, index|
       ::Forms::Test::Question.find(id).update_attribute :order_index, index
     end

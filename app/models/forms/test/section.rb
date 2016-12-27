@@ -36,17 +36,27 @@ class Forms::Test::Section < ApplicationRecord
       alerts << 'This section has no questions'
     end
 
-    # TODO Think how to avoid a query to the database
-    if required_score > fields.sum(:score) && required_score_unit_points?
+    if required_score > eager_max_score && required_score_unit_points?
       alerts << 'Required score is larger than max score'
     end
 
-    # TODO Think how to avoid a query to the database
-    if acceptable_score > fields.autocheck.sum(:score) && acceptable_score_unit_points?
+    if acceptable_score > eager_max_auto_score && acceptable_score_unit_points?
       alerts << 'Acceptable autoscore is larger than max autoscore'
     end
 
     alerts
+  end
+
+  private
+
+  # Supposed to be used when questions and fields have been eager loaded
+  def eager_max_score
+    questions.map(&:fields).flatten.map(&:score).inject(:+) || 0
+  end
+
+  # Supposed to be used when questions and fields have been eager loaded
+  def eager_max_auto_score
+    questions.map(&:fields).flatten.select { |f| f.autocheck }.map(&:score).inject(:+) || 0
   end
 
 end
