@@ -20,10 +20,6 @@ class Forms::TestPolicy < ApplicationPolicy
     allowed? 'forms:test:update'
   end
 
-  def update?
-    allowed?(:test, :update)
-  end
-
   def destroy?
     allowed? 'forms:test:delete'
   end

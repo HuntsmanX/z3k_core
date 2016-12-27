@@ -34,7 +34,7 @@ class Forms::Response < ApplicationRecord
   private
 
   def successful_by_sections_count?
-    sections.select{|s| s.is_successful?}.count >= self.successful_sections_count
+    sections.select { |s| s.is_successful? }.count >= self.successful_sections_count
   end
 
   def successful_by_total_score?
