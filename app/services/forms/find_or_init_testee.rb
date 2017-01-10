@@ -29,7 +29,7 @@ class Forms::FindOrInitTestee
   attr_reader :recruitment_id
 
   def generate_email attrs
-    parts = [SecureRandom.hex(4), attrs.first_name_eng, attrs.last_name_eng]
+    parts = [SecureRandom.hex(4), attrs.first_name_eng.split, attrs.last_name_eng.split].flatten
     "#{parts.join('-')}@zone3000.net".downcase
   end
 
