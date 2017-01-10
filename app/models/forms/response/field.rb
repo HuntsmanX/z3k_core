@@ -26,15 +26,15 @@ class Forms::Response::Field < ApplicationRecord
 	private
 
 	def recalculate_scores
-    response.recalculate_scores!
+    response&.recalculate_scores!
 	end
 
   def recalculate_checked
-	  response.recalculate_checked!
+	  response&.recalculate_checked!
   end
 
   def recalculate_successful
-    section.recalculate_successful!
+    section&.recalculate_successful!
   end
 
 end

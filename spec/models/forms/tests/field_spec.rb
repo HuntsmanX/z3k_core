@@ -16,6 +16,5 @@ describe Forms::Test::Field do
     field_without_score_and_options.valid?
     expect(field_without_score_and_options.errors[:score]).to include("can't be blank")
     expect(field_without_score_and_options.errors[:score]).to include("is not a number")
-    expect(field_without_score_and_options.errors[:at_least_two_options]).to include("must be present")
 	end
 end
