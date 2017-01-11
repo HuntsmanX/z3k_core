@@ -4,6 +4,10 @@ class Forms::FindOrInitTestee
     @recruitment_id = recruitment_id
   end
 
+  def call
+    @result = testee
+  end
+
   def testee
     attrs = OpenStruct.new Forms::Testee.show(@recruitment_id, 'recruitment')
 
@@ -20,8 +24,8 @@ class Forms::FindOrInitTestee
         last_name_eng:  attrs.last_name_eng
       }
     })
-    user.save!
-    user
+    user.save
+    user.errors.any? ? ServiceResult.fail(user.errors) : ServiceResult.success(user)
   end
 
   private

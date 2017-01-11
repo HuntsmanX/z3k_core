@@ -4,8 +4,10 @@ class Forms::DuplicateTestForResponse
   def initialize(testee, test_id)
     @response = testee.responses.new
     @test     = Forms::Test.with_nested.find_by id: test_id
+  end
 
-    duplicate_test!
+  def call
+    @test.sections.any? ? ServiceResult.success(duplicate_test!) : ServiceResult.fail("Test #{@test.id} has no sections")
   end
 
   private
@@ -24,7 +26,7 @@ class Forms::DuplicateTestForResponse
 
   def duplicate_sections
     @test.sections.each do |section|
-      response_section = response.sections.create(
+      response_section = @response.sections.create(
         title:                  section.title,
         time_limit:             section.time_limit,
         bonus_time:             section.bonus_time,
