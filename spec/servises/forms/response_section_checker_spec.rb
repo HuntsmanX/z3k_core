@@ -15,40 +15,45 @@ describe ::Forms::CheckResponseSection do
 
   it "checks right response section (points)" do
     full_test = create_full_test
-    response = ::Forms::DuplicateTestForResponse.new(user_ua, full_test.id).response
+    response_result = ::Forms::DuplicateTestForResponse.new(user_ua, full_test.id).call
+    response = response_result.payload
     update_response_section_for_correct_answer(response.sections.first)
-    expect(::Forms::CheckResponseSection.check(response.sections.first)).to be true
+    expect(::Forms::CheckResponseSection.new(response.sections.first).call.payload).to be true
   end
 
   it "checks wrong response section (points)" do
     full_test = create_full_test
-    response = ::Forms::DuplicateTestForResponse.new(user_ua, full_test.id).response
+    response_result = ::Forms::DuplicateTestForResponse.new(user_ua, full_test.id).call
+    response = response_result.payload
     update_response_section_for_incorrect_answer(response.sections.first)
-    expect(::Forms::CheckResponseSection.check(response.sections.first)).to be false
+    expect(::Forms::CheckResponseSection.new(response.sections.first).call.error).to be false
   end
 
   it "checks right response section (percent)" do
     full_test = create_full_test
-    response = ::Forms::DuplicateTestForResponse.new(user_ua, full_test.id).response
+    response_result = ::Forms::DuplicateTestForResponse.new(user_ua, full_test.id).call
+    response = response_result.payload
     response.sections.first.update(acceptable_score_unit: 'percent', required_score_unit: 'percent',  acceptable_score: 50)
     update_response_section_for_correct_answer_percent(response.sections.first)
-    expect(::Forms::CheckResponseSection.check(response.sections.first)).to be true
+    expect(::Forms::CheckResponseSection.new(response.sections.first).call.payload).to be true
   end
 
   it "checks wrong response section (percent)" do
     full_test = create_full_test
-    response = ::Forms::DuplicateTestForResponse.new(user_ua, full_test.id).response
+    response_result = ::Forms::DuplicateTestForResponse.new(user_ua, full_test.id).call
+    response = response_result.payload
     response.sections.first.update(acceptable_score_unit: 'percent', required_score_unit: 'percent',  acceptable_score: 50)
     update_response_section_for_incorrect_answer(response.sections.first)
-    expect(::Forms::CheckResponseSection.check(response.sections.first)).to be false
+    expect(::Forms::CheckResponseSection.new(response.sections.first).call.error).to be false
   end
 
   it "show next sections regardless of score" do
     full_test = create_full_test
-    response = ::Forms::DuplicateTestForResponse.new(user_ua, full_test.id).response
+    response_result = ::Forms::DuplicateTestForResponse.new(user_ua, full_test.id).call
+    response = response_result.payload
     response.sections.first.update(show_next_section: 'show_next_regardless_of_score', acceptable_score: 50)
     update_response_section_for_incorrect_answer(response.sections.first)
-    expect(::Forms::CheckResponseSection.check(response.sections.first)).to be true
+    expect(::Forms::CheckResponseSection.new(response.sections.first).call.payload).to be true
   end
 
 	def create_full_test

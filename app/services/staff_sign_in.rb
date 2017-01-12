@@ -1,4 +1,4 @@
-class StaffSignIn
+class StaffSignIn < ApplicationService
 
   def initialize email, password
     @email             = email
@@ -6,9 +6,14 @@ class StaffSignIn
     @staff_credentials = Rails.application.secrets.staff
   end
 
+  def perform
+    sign_in
+    error ? [false, error] : [true, user_from_response]
+  end
+
   def sign_in
     RestClient.get(sign_in_url, { params: sign_in_params }) do |r|
-      self.response = r.code == 200 ? JSON.parse(r.body) : nil
+      r.code == 200 ? self.response = JSON.parse(r.body) : self.error = 'Invalid Credentials'
     end
     response && user_from_response
   end
@@ -16,6 +21,7 @@ class StaffSignIn
   private
 
   attr_reader :email, :password, :staff_credentials, :response
+  attr_accessor :error
 
   def sign_in_url
     staff_credentials['url'] + 'api/auth'

@@ -1,44 +1,28 @@
-class Forms::DuplicateTestForResponse
-  attr_reader :response
+class Forms::DuplicateTestForResponse < ApplicationService
 
   def initialize(testee, test_id)
     @response = testee.responses.new
     @test     = Forms::Test.with_nested.find_by id: test_id
+  end
 
-    duplicate_test!
+  def perform
+    return [false, 'Unable to create response for a test with warnings'] if test.errors.any?
+    duplicate_test ? [true, response] : [false, response.errors]
   end
 
   private
 
-  def duplicate_test!
-     @response.name                      = @test.name
-     @response.test_id                   = @test.id
-     @response.success_criterion         = @test.success_criterion
-     @response.required_score            = @test.required_score
-     @response.required_score_unit       = @test.required_score_unit
-     @response.successful_sections_count = @test.successful_sections_count
-     @response.save
+  attr_reader :test, :response
 
-     duplicate_sections if @test.sections.any?
+  def duplicate_test
+   @response.attributes = @test.attributes.except('id')
+   @response.save
+   duplicate_sections if @test.sections.any?
   end
 
   def duplicate_sections
     @test.sections.each do |section|
-      response_section = response.sections.create(
-        title:                  section.title,
-        time_limit:             section.time_limit,
-        bonus_time:             section.bonus_time,
-        description:            section.description,
-        order_index:            section.order_index,
-        required_score:         section.required_score,
-        acceptable_score:       section.acceptable_score,
-        acceptable_score_unit:  section.acceptable_score_unit,
-        required_score_unit:    section.required_score_unit,
-        show_next_section:      section.show_next_section,
-        questions_to_show:      section.questions_to_show,
-        shuffle_questions:      section.shuffle_questions
-      )
-
+      response_section = @response.sections.create(section.attributes.except('id', 'test_id', 'questions_count'))
       section_questions = get_section_questions(section)
       duplicate_questions(response_section, section_questions) if section_questions.any?
     end

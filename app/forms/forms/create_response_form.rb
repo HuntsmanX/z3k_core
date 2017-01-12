@@ -21,9 +21,19 @@ class Forms::CreateResponseForm
   private
 
   def persist
-    testee    = ::Forms::FindOrInitTestee.new(@user_id).testee
-		@response = ::Forms::DuplicateTestForResponse.new(testee, test_id).response
-    @response.present?
+    testee_result = ::Forms::FindOrInitTestee.new(@user_id).call
+		if testee_result.successful?
+			response_result = ::Forms::DuplicateTestForResponse.new(testee_result.payload, test_id).call
+			duplicate_test_result(response_result)
+		else
+			errors.add(:testee, testee_result.error)
+		end
+		errors.any? ? false : @response
   end
+
+	def duplicate_test_result(response_result)
+		@response = response_result.payload if response_result.successful?
+		errors.add(:response, response_result.error) unless response_result.successful?
+	end
 
 end

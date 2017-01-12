@@ -6,8 +6,9 @@ class V1::Forms::Response::SectionsController < ApplicationController
     authorize section
 		section.update_attributes section_params
 
-		successful = ::Forms::CheckResponseSection.check(section)
-		next_section = successful ? section.next_section : nil
+		checker_result = ::Forms::CheckResponseSection.new(section).call
+
+		next_section = checker_result.successful? && section.next_section ? section.next_section : nil
 
 		render json: section, with_nested: false, meta: { next_uid: next_section.try(:uuid) }
 	end

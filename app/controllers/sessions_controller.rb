@@ -1,10 +1,11 @@
 class SessionsController < DeviseTokenAuth::SessionsController
 
 	def create
-		@resource = StaffSignIn.new(params[:email], params[:password]).sign_in
+		result = StaffSignIn.new(params[:email], params[:password]).call
 
-		render_create_error_bad_credentials and return unless @resource
+		render_create_error_bad_credentials and return unless result.successful?
 
+		@resource = result.payload
 		@client_id = SecureRandom.urlsafe_base64
 		@token     = SecureRandom.urlsafe_base64
 

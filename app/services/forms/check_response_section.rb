@@ -1,4 +1,4 @@
-class Forms::CheckResponseSection
+class Forms::CheckResponseSection < ApplicationService
 
   methods_names_for_select = [
     :check_checkboxes,
@@ -13,6 +13,16 @@ class Forms::CheckResponseSection
     :check_text_area,
     :check_inline_text_input
   ]
+
+  def initialize(section)
+    @section = section
+  end
+
+  def perform
+    check(@section) ? [true, check(@section)] : [false, check(@section)]
+  end
+
+  private
 
   def self.field_score(field)
     avg = option_average_score(field)
@@ -43,17 +53,17 @@ class Forms::CheckResponseSection
     field.score / field.options.count
   end
 
-  def self.check(response_section)
+  def check(response_section)
     user_score = []
     response_section.questions.each do |question|
       question.fields.where(autocheck: true).where.not(field_type: ::Forms::Test::Field.field_types['text_editor']).each do |field|
-        user_score << self.send("check_#{field.field_type}", field)
+        user_score << self.class.send("check_#{field.field_type}", field)
       end
     end
-    response_section.show_next_regardless_of_score? ? true : self.pass_section?(response_section, user_score)
+    response_section.show_next_regardless_of_score? ? true : pass_section?(response_section, user_score)
   end
 
-  def self.pass_section?(response_section, user_score)
+  def pass_section?(response_section, user_score)
     max_response_section = response_section.questions.map(&:fields).flatten.map(&:score).inject(:+) || 0
     scores = user_score.grep(Integer).reduce(:+) || -1
     if response_section.required_score_unit_percent?
@@ -64,6 +74,8 @@ class Forms::CheckResponseSection
       scores >= response_section.required_score
     end
   end
+
+  private_class_method :field_score, :option_average_score, :scores_for_checkboxes
 
   methods_names_for_select.each do |method_name|
     Forms::CheckResponseSection.define_singleton_method(method_name) do |field|
