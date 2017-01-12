@@ -22,21 +22,18 @@ class Forms::CreateResponseForm
 
   def persist
     testee_result = ::Forms::FindOrInitTestee.new(@user_id).call
-		if testee_result.success.present?
-			create_response = ::Forms::DuplicateTestForResponse.new(testee_result.result, test_id)
-			duplicate_test_result(create_response)
+		if testee_result.successful?
+			response_result = ::Forms::DuplicateTestForResponse.new(testee_result.payload, test_id).call
+			duplicate_test_result(response_result)
 		else
-			self.errors.add(:testee, testee_result.result)
+			self.errors.add(:testee, testee_result.error)
 		end
 		self.errors.any? ? false : @response
   end
 
-	def duplicate_test_result(create_response)
-		if create_response.call.success.present?
-			@response = create_response.response
-		else
-			self.errors.add(:response, create_response.result)
-		end
+	def duplicate_test_result(response_result)
+		@response = response_result.payload if response_result.successful?
+		self.errors.add(:response, response_result.error) unless response_result.successful?
 	end
 
 end

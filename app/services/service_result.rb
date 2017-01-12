@@ -1,22 +1,38 @@
 class ServiceResult
-	attr_accessor :result, :success
 
-	def initialize(payload, success)
+	def initialize(success, data)
 		@success = success
-		@result  = payload
+		success ? @data = data : @errors = data
+	end
+
+	def successful?
+		success
+	end
+
+	def payload
+		return nil unless successful?
+		data
+	end
+
+	def error
+		return nil if successful?
+		formatted_errors
 	end
 
 	private
 
+	attr_reader :success, :data, :errors
+
 	def self.success(payload)
-		new payload, true
+		new true, payload
 	end
 
 	def self.fail(errors)
-		@result = parse_active_model_errors(errors) if errors.is_a? ActiveModel::Errors
+		new false, errors
 	end
 
-	def parse_active_model_errors(errors)
-		errors.messages
+	def formatted_errors
+		return errors.messages if errors.is_a? ActiveModel::Errors
+		errors
 	end
 end

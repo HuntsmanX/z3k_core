@@ -5,8 +5,7 @@ describe ::Forms::DuplicateTestForResponse do
   let!(:full_test)  { FactoryGirl.create :full_test }
 
   it "creates a response via clone test" do
-	  response = ::Forms::DuplicateTestForResponse.new(user_ua, full_test.id)
-	  response.call
-    expect(response.response).to be_valid
+	  response = ::Forms::DuplicateTestForResponse.new(user_ua, full_test.id).call
+    expect(response.payload).to be_valid
   end
 end
