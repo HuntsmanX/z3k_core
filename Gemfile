@@ -38,6 +38,7 @@ group :development, :test do
   gem 'pry'
   gem 'pry-nav'
   gem 'awesome_print'
+  gem 'rubocop', '~> 0.46.0', require: false
 end
 
 group :test do
