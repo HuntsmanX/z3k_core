@@ -9,6 +9,7 @@ class Forms::FindOrInitTestee < ApplicationService
   end
 
   private
+
   def testee
     attrs = OpenStruct.new Forms::Testee.show(@recruitment_id, 'recruitment')
 

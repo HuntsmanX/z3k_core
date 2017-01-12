@@ -26,14 +26,14 @@ class Forms::CreateResponseForm
 			response_result = ::Forms::DuplicateTestForResponse.new(testee_result.payload, test_id).call
 			duplicate_test_result(response_result)
 		else
-			self.errors.add(:testee, testee_result.error)
+			errors.add(:testee, testee_result.error)
 		end
-		self.errors.any? ? false : @response
+		errors.any? ? false : @response
   end
 
 	def duplicate_test_result(response_result)
 		@response = response_result.payload if response_result.successful?
-		self.errors.add(:response, response_result.error) unless response_result.successful?
+		errors.add(:response, response_result.error) unless response_result.successful?
 	end
 
 end

@@ -23,6 +23,7 @@ class Forms::CheckResponseSection < ApplicationService
   end
 
   private
+
   def self.field_score(field)
     avg = option_average_score(field)
     score = 0
@@ -73,6 +74,8 @@ class Forms::CheckResponseSection < ApplicationService
       scores >= response_section.required_score
     end
   end
+
+  private_class_method :field_score, :option_average_score, :scores_for_checkboxes
 
   methods_names_for_select.each do |method_name|
     Forms::CheckResponseSection.define_singleton_method(method_name) do |field|

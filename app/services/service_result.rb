@@ -1,38 +1,38 @@
 class ServiceResult
 
-	def initialize(success, data)
-		@success = success
-		success ? @data = data : @errors = data
-	end
+  def initialize(success, data)
+    @success = success
+    success ? @data = data : @errors = data
+  end
 
-	def successful?
-		success
-	end
+  def successful?
+    @success
+  end
 
-	def payload
-		return nil unless successful?
-		data
-	end
+  def payload
+    return nil unless successful?
+    data
+  end
 
-	def error
-		return nil if successful?
-		formatted_errors
-	end
+  def error
+    return nil if successful?
+    formatted_errors
+  end
 
-	private
+  def self.success(payload)
+    new true, payload
+  end
 
-	attr_reader :success, :data, :errors
+  def self.fail(errors)
+    new false, errors
+  end
 
-	def self.success(payload)
-		new true, payload
-	end
+  private
 
-	def self.fail(errors)
-		new false, errors
-	end
+  attr_reader :success, :data, :errors
 
-	def formatted_errors
-		return errors.messages if errors.is_a? ActiveModel::Errors
-		errors
-	end
+  def formatted_errors
+    return errors.messages if errors.is_a? ActiveModel::Errors
+    errors
+  end
 end

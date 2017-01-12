@@ -1,15 +1,15 @@
 # Abstract class
 class ApplicationService
 
-	def call
-		success, data = perform
-		success ? ServiceResult.success(data) : ServiceResult.fail(data)
-	end
+  def call
+    success, data = perform
+    success ? ServiceResult.success(data) : ServiceResult.fail(data)
+  end
 
-	private
+  private
 
-	def perform(attrs=nil)
-		raise Exception.new('perform method must be implemented by the child class')
-	end
+  def perform(*)
+    raise Exception, 'perform method must be implemented by the child class'
+  end
 
 end
