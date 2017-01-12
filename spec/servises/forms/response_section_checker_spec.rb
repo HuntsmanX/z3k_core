@@ -57,7 +57,7 @@ describe ::Forms::CheckResponseSection do
   end
 
 	def create_full_test
-    question_with_fields_second.fields.first.update(field_type: 'text_area', block_key: '6604h', block_key: '6604h', content: '4')
+    question_with_fields_second.fields.first.update(field_type: 'text_area', block_key: '6604h', content: '4')
     section.questions << [question_with_fields, question_with_fields_second]
     test.sections << section
     test
