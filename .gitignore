@@ -28,3 +28,5 @@
 config/secrets.yml
 config/database.yml
 
+#Ignore SimpleCov
+coverage

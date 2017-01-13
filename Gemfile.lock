@@ -64,6 +64,7 @@ GEM
       devise (> 3.5.2, <= 4.2)
       rails (< 6)
     diff-lcs (1.2.5)
+    docile (1.1.5)
     domain_name (0.5.20160826)
       unf (>= 0.0.5, < 1.0.0)
     erubis (2.7.0)
@@ -83,6 +84,7 @@ GEM
     http-cookie (1.0.3)
       domain_name (~> 0.5)
     i18n (0.7.0)
+    json (2.0.3)
     jsonapi (0.1.1.beta6)
       jsonapi-parser (= 0.1.1.beta3)
       jsonapi-renderer (= 0.1.1.beta1)
@@ -202,6 +204,11 @@ GEM
       ruby-progressbar (~> 1.7)
       unicode-display_width (~> 1.0, >= 1.0.1)
     ruby-progressbar (1.8.1)
+    simplecov (0.12.0)
+      docile (~> 1.1.0)
+      json (>= 1.8, < 3)
+      simplecov-html (~> 0.10.0)
+    simplecov-html (0.10.0)
     slop (3.6.0)
     sprockets (3.7.0)
       concurrent-ruby (~> 1.0)
@@ -255,6 +262,7 @@ DEPENDENCIES
   rspec-core
   rspec-rails
   rubocop (~> 0.46.0)
+  simplecov
   tzinfo-data
 
 BUNDLED WITH
